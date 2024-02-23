@@ -91,18 +91,25 @@
     "text": "This comes from the file about.qmd.\nThis is a website for the final project for MA[46]15 Data Science with R by Team TEAMNAME. The members of this team are below."
   },
   {
-    "objectID": "about.html#chang-liu",
-    "href": "about.html#chang-liu",
+    "objectID": "about.html#henry-price",
+    "href": "about.html#henry-price",
     "title": "About",
-    "section": "Chang Liu",
-    "text": "Chang Liu\nLuis is a Ph.D. student in Stats and is the Teaching Fellow for the course."
+    "section": "Henry Price",
+    "text": "Henry Price\nHenry is a junior majoring in data science with a minor in economics. github.com/hrpri"
   },
   {
-    "objectID": "about.html#dan-sussman",
-    "href": "about.html#dan-sussman",
+    "objectID": "about.html#peizi-wang",
+    "href": "about.html#peizi-wang",
     "title": "About",
-    "section": "Dan Sussman",
-    "text": "Dan Sussman\nDan is a professor in the Math/Stat department and is the instructor for the course.\n\n\nAbout this Template.\nThis is based off of the standard Quarto website template from RStudio (2023.09.0 Build 463)."
+    "section": "Peizi Wang",
+    "text": "Peizi Wang\nPeizi Wang is a senior majoring Economics & Mathematics with a minor in Computer Science. github.com/Danielpzw"
+  },
+  {
+    "objectID": "about.html#jiaqi-wei",
+    "href": "about.html#jiaqi-wei",
+    "title": "About",
+    "section": "Jiaqi Wei",
+    "text": "Jiaqi Wei\nJiaqi Wei is a senior majoring in Econ & Math, minoring in CS. Github User name: jackiiiiew.\n\n\nAbout this Template.\nThis is based off of the standard Quarto website template from RStudio (2023.09.0 Build 463)."
   },
   {
     "objectID": "big_picture.html",
