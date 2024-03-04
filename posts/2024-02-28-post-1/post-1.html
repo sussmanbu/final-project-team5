@@ -93,7 +93,7 @@ ul.task-list li input[type="checkbox"] {
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="../../analysis.html" rel="" target="">
- <span class="menu-text">Analysis</span></a>
+ <span class="menu-text">draft: false</span></a>
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="../../data.html" rel="" target="">
@@ -170,6 +170,21 @@ ul.task-list li input[type="checkbox"] {
 <li>Supervision Level: Supervision level assigned to the individual. Options include Levels 1-5. Level 0 indicates risk assessment has not been conducted for the individual.</li>
 </ul>
 <p>The dataset is in a csv file, so it is able to load and clean. From the dataset, we want to explore on the question that are there disparities in recidivism rates among racial-ethnic groups when considering the supervising district?</p>
+</section>
+<section id="data-set-3-ipums-cps-covid-19-economic-impact-data" class="level1">
+<h1>Data Set 3: IPUMS CPS COVID-19 Economic Impact Data</h1>
+<p><a href="https://cps.ipums.org/cps/">Dataset link here</a></p>
+<p>This is a cross sectional dataset of data collected from the International Public Use Microdata Supplement’s current population survey. There are a plethora of both person and household level variables to choose from but we have decided to focus on the covid related and demographic variables for the purposes of our analysis.</p>
+<p>The variables are as follows:</p>
+<ul>
+<li><p>COVIDTELEW: Indicates if the respondent worked remotely for pay due to COVID-19</p></li>
+<li><p>COVIDUNAW: Indicates if the respondent was unable to work due to COVID-19</p></li>
+<li><p>COVIDPAID: Indicates if the respondent recieved pay for hours not worked due to COVID-19</p></li>
+<li><p>COVIDLOOK: Indicates if COVID-19 prevented the respondent from looking for work</p></li>
+<li><p>COVIDMED: Indicates if the respondent was unable to get needed medical care for a condition other can COVID-19 due to COVID-19</p></li>
+<li><p>RACE: The respondents race</p></li>
+</ul>
+<p>From IPUMS we were able to obtain a csv file containing data from monthly samples between May 2020 and September 2022. After successfully loading the data into R, the row count indicates that there are 3,035,625 observations in the dataset. With this data, we plan to analyze the impact of COVID-19 on economic stability among different racial groups. Thus, the main question is among different racial groups, which were those most disproportionately affected? Also, the challenge is incomplete data or missing values, which can skew results and lead to inaccurate conclusions. Ensuring data quality and completeness is a significant challenge.</p>
 
 
 </section>
