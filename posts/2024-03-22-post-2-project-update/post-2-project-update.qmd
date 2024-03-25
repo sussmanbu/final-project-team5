@@ -7,3 +7,4 @@ date-modified: "2024-03-22"
 draft: FALSE
 ---
 
+After discussion, we decided to choose the data set about COMPAS Recidivism Racial Bias. We took time to investigate the data, so we found the original source about the data. Then, we did data loading and cleaning. At last, we read the article on Data for Equity Principals and thought about how the data could be applied on our data. And, we wrote several paragraphs about limitations of your analysis and the potential for abuse or misuse of the data.
