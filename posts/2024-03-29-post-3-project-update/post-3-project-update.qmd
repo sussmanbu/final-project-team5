@@ -7,10 +7,9 @@ date-modified: "2024-03-29"
 draft: FALSE
 ---
 
-In this week, we spent some extra time investigating the original data source, and summarized on the data background. We further analyzed on the data in our dataset. We analyzed the distribution of two important variable in our dataset which is "Raw Score" and the "Decile Score". The "Raw Score" is the original score of individual to conduct recidivism. The higher the score reflects that the person has a greater chance to reoffend. The "Decile Score" is the score calculated based on the commercial algorithm  COMPAS (Correctional Offender Management Profiling for Alternative Sanctions). COMPAS scores for each defendant ranged from 1 to 10, with ten being the highest risk. Scores 1 to 4 were labeled by COMPAS as “Low”; 5 to 7 were labeled “Medium”; and 8 to 10 were labeled “High.”
+In this week, we spent some extra time investigating the original data source, and summarized on the data background. We further analyzed on the data in our dataset. We analyzed the distribution of two important variable in our dataset which is "Raw Score" and the "Decile Score". The "Raw Score" is the original score of individual's likelyhood to conduct recidivism. The higher the score reflects that the person has a greater chance to reoffend. The "Decile Score" is the score calculated based on the commercial algorithm  COMPAS (Correctional Offender Management Profiling for Alternative Sanctions). COMPAS scores for each defendant ranged from 1 to 10, with ten being the highest risk. Scores 1 to 4 were labeled by COMPAS as “Low”; 5 to 7 were labeled “Medium”; and 8 to 10 were labeled “High.”
 
 ## Data Background
-
 
 This dataset is collected by ProPublica in 2013 and 2014, from the Broward County Sheriff’s Office in Florida. COMPAS is biased in favor of white defendants, and against black inmates. We are able to find the data from the original source.
 
@@ -21,6 +20,8 @@ The data can be used to analyze the COMPAS recidivism algorithm. Also, the resea
 ## Data Analyze
 
 ```{r}
+library(tidyverse)
+
 compas_scores_clean <- read_csv("dataset/compas-scores-clean.csv")
 
 # Boxplot for RawScore
