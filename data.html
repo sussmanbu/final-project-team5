@@ -155,6 +155,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#load-and-clean-data-script" id="toc-load-and-clean-data-script" class="nav-link" data-scroll-target="#load-and-clean-data-script">Load and clean data script</a></li>
   </ul></li>
   <li><a href="#rubric-on-this-page" id="toc-rubric-on-this-page" class="nav-link" data-scroll-target="#rubric-on-this-page">Rubric: On this page</a></li>
+  <li><a href="#data-equity" id="toc-data-equity" class="nav-link" data-scroll-target="#data-equity">Data Equity</a></li>
   </ul>
 </nav>
     </div>
@@ -216,6 +217,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell-output cell-output-stdout">
 <pre><code>
 &gt; library(tidyverse)</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: 程辑包'tidyverse'是用R版本4.3.3 来建造的</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
@@ -302,6 +306,13 @@ dbl (10): Person_ID, AssessmentID, Case_ID, ScaleSet_ID, RecSupervisionLevel...
 <li>This page should be self-contained.</li>
 </ul></li>
 </ul>
+</section>
+<section id="data-equity" class="level2">
+<h2 class="anchored" data-anchor-id="data-equity">Data Equity</h2>
+<p>For the COMPAS Recidivism Racial Bias dataset, equitable data practices are relevant mainly from two points: Beneficence and Transparency.</p>
+<p>The beneficence principle demands that the collection, analysis, and dissemination of data on probation recidivism actively aim to benefit the individuals and communities represented in the data. For this dataset, adhering to beneficence involves being meticulous in how recidivism data are analyzed and presented. This means ensuring that the analysis does not inadvertently stigmatize individuals based on race, ethnicity, or any other demographic characteristic. It also involves considering the potential policy implications of the findings and framing results in a way that highlights systemic solutions rather than individual failings.</p>
+<p>Transparency is crucial in discussing the dataset’s limitations and the context within which the data were collected and analyzed. Acknowledging the limitations in recidivism research, such as potential biases in the criminal justice system that affect who is under probation and the conditions of their supervision, is essential for responsible use of the data. Transparency about this dataset would involve openly discussing the potential for abuse or misuse of the data, such as the risk of the data being used to support policies that disproportionately affect marginalized communities. It also requires clear communication about the scope of the analysis, the assumptions made, and the measures taken to protect the privacy and dignity of individuals represented in the data. For instance, any analysis should be clear about its geographical and temporal scope, the definitions of success or failure in probation, and the inherent uncertainties in measuring and predicting recidivism.</p>
+<p>The analysis faces limitations that might not fully capture the complex factors influencing recidivism, such as access to support services and community reintegration programs. Additionally, there could be biases in data collection and reporting processes, reflecting systemic inequalities within the criminal justice system.</p>
 
 
 </section>
