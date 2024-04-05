@@ -251,6 +251,14 @@ dbl (10): Person_ID, AssessmentID, Case_ID, ScaleSet_ID, RecSupervisionLevel...
 <span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a><span class="fu">save</span>(compas_data_clean, <span class="at">file =</span> here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"dataset/compas-scores-clean.RData"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+<p>The above code:</p>
+<ol type="1">
+<li>load the data from <code>compas-scores-raw.csv</code> in our <code>dataset</code> directory</li>
+<li>Then it tells R that <code>DateOfBirth</code> field follows <code>mm/dd/yyyy</code> format and <code>Screening_Date</code> follows <code>mm/dd/yyyy hh:mm</code> format using <code>mdy</code> and <code>mdy_hm</code> function from <code>lubridate</code> package.</li>
+<li>Using the difference in days between <code>DateOfBirth</code> and <code>Screening_Date</code>, we can calculate the age of that person. We then save the age to a field called <code>Age</code>.</li>
+<li>Then using <code>dplyr</code> package, we project on only those fields that we think is useful to us and drop any triples with na values.</li>
+<li>We save the clean data to <code>compas-scores-clean.csv</code> to our <code>dataset</code> directory.</li>
+</ol>
 
 
 </section>
