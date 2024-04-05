@@ -192,21 +192,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Warning: package 'tidyverse' was built under R version 4.3.3</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
 <pre><code>── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
 ✔ dplyr     1.1.4     ✔ readr     2.1.5
 ✔ forcats   1.0.0     ✔ stringr   1.5.1
-✔ ggplot2   3.4.4     ✔ tibble    3.2.1
-✔ lubridate 1.9.3     ✔ tidyr     1.3.0
+✔ ggplot2   3.5.0     ✔ tibble    3.2.1
+✔ lubridate 1.9.3     ✔ tidyr     1.3.1
 ✔ purrr     1.0.2     
 ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
 ✖ dplyr::filter() masks stats::filter()
 ✖ dplyr::lag()    masks stats::lag()
 ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>compas_scores_clean <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"dataset/compas-scores-clean.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>compas_scores_clean <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"dataset/compas-scores-clean.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Rows: 60843 Columns: 8
 ── Column specification ────────────────────────────────────────────────────────
@@ -218,20 +215,20 @@ date (1): DateOfBirth
 ℹ Use `spec()` to retrieve the full column specification for this data.
 ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Boxplot for RawScore</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(compas_scores_clean<span class="sc">$</span>RawScore, <span class="at">main=</span><span class="st">"Boxplot of Raw Scores"</span>, </span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>        <span class="at">ylab=</span><span class="st">"Raw Score"</span>, <span class="at">xlab=</span><span class="st">""</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Boxplot for RawScore</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(compas_scores_clean<span class="sc">$</span>RawScore, <span class="at">main=</span><span class="st">"Boxplot of Raw Scores"</span>, </span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>        <span class="at">ylab=</span><span class="st">"Raw Score"</span>, <span class="at">xlab=</span><span class="st">""</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="post-3-project-update_files/figure-html/unnamed-chunk-1-1.png" class="img-fluid" width="672"></p>
 </div>
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Boxplot for DecileScore</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(compas_scores_clean<span class="sc">$</span>DecileScore, <span class="at">main=</span><span class="st">"Boxplot of Decile Scores"</span>, </span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>        <span class="at">ylab=</span><span class="st">"Decile Score"</span>, <span class="at">xlab=</span><span class="st">""</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Boxplot for DecileScore</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(compas_scores_clean<span class="sc">$</span>DecileScore, <span class="at">main=</span><span class="st">"Boxplot of Decile Scores"</span>, </span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>        <span class="at">ylab=</span><span class="st">"Decile Score"</span>, <span class="at">xlab=</span><span class="st">""</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="post-3-project-update_files/figure-html/unnamed-chunk-1-2.png" class="img-fluid" width="672"></p>
 </div>
 </div>
-<p>The box plot of the Raw Scores from your dataset shows a wide range in values, suggesting a high level of variability among the scores. The median value is slightly above zero, and there is a notable presence of high outliers, indicating that some scores are significantly higher than the majority. The spread of scores within the interquartile range is large, pointing to a substantial dispersion among the middle 50% of data points. In contrast, there are no outliers on the lower side, which suggests that the lower scores are more closely packed together without extreme low values.</p>
+<p>The box plot of the Raw Scores shows a wide range in values, suggesting a high level of variability among the scores. The median value is slightly above zero, and there is a notable presence of high outliers, indicating that some scores are significantly higher than the majority. The spread of scores within the interquartile range is large, pointing to a substantial dispersion among the middle 50% of data points. In contrast, there are no outliers on the lower side, which suggests that the lower scores are more closely packed together without extreme low values.</p>
 <p>On the other hand, the box plot for the Decile Scores presents a more symmetrical distribution, with a median value around the midpoint of the score range. This plot is characterized by a narrower interquartile range, indicating less variation among the central half of the scores compared to the Raw Scores. The absence of significant outliers in the Decile Score distribution suggests a more uniform scoring scale, possibly indicating a methodical categorization into deciles. This could reflect a normalizing process, which aims to distribute the scores more evenly across a predetermined scale.</p>
 
 
