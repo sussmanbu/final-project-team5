@@ -55,6 +55,12 @@ compas_data_clean <- compas_data %>%
 write_csv(compas_data_clean, file = here::here("dataset", "compas-scores-clean.csv"))
 
 save(compas_data_clean, file = here::here("dataset/compas-scores-clean.RData"))
-
-
 ```
+
+The above code:
+
+1.  load the data from `compas-scores-raw.csv` in our `dataset` directory
+2.  Then it tells R that `DateOfBirth` field follows `mm/dd/yyyy` format and `Screening_Date` follows `mm/dd/yyyy hh:mm` format using `mdy` and `mdy_hm` function from `lubridate` package.
+3.  Using the difference in days between `DateOfBirth` and `Screening_Date`, we can calculate the age of that person. We then save the age to a field called `Age`.
+4.  Then using `dplyr` package, we project on only those fields that we think is useful to us and drop any triples with na values.
+5.  We save the clean data to `compas-scores-clean.csv` to our `dataset` directory.
