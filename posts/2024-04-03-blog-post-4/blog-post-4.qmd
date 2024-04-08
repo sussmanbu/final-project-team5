@@ -6,4 +6,19 @@ date: "2024-04-03"
 date-modified: "2024-04-03"
 draft: FALSE
 ---
+```{r}
+library(MASS)
 
+compas_scores_clean <- read_csv("dataset/compas-scores-clean.csv")
+
+model <- polr(as.factor(DecileScore) ~ Sex, data = compas_scores_clean, Hess=TRUE)
+model
+summary(model)
+predictions <- predict(model, compas_scores_clean, type="class")
+ggplot(compas_scores_clean, aes(x=Sex, y=DecileScore)) +
+  geom_boxplot() +
+  labs(title="Distribution of DecileScores by Sex",
+       x="Sex",
+       y="DecileScore") +
+  theme_minimal()
+```
