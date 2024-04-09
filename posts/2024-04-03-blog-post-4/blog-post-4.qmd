@@ -6,6 +6,7 @@ date: "2024-04-03"
 date-modified: "2024-04-03"
 draft: FALSE
 ---
+## Relationship Between Sex and Decile Score
 ```{r}
 library(tidyverse)
 library(MASS)
@@ -24,7 +25,7 @@ ggplot(compas_scores_clean, aes(x=Sex, y=DecileScore)) +
   theme_minimal()
 ```
 Both Female and Male categories have median scores (indicated by the line inside the box) that are approximately at the same level, suggesting that the central tendency of scores is similar across both sexes.The range for Males is slightly larger than for Females, which suggests that scores for Males are more spread out. There do not appear to be any outliers indicated for either Females or Males, suggesting that all the scores fall within a relatively expected range. The male has wider IQR than Female’s. Also, both graphs are skewed to the right.
-=======
+
 ## Relationship Between Race and Decile Score
 
 ```{r}
