@@ -23,4 +23,27 @@ ggplot(compas_scores_clean, aes(x=Sex, y=DecileScore)) +
        y="DecileScore") +
   theme_minimal()
 ```
+<<<<<<< HEAD
 Both Female and Male categories have median scores (indicated by the line inside the box) that are approximately at the same level, suggesting that the central tendency of scores is similar across both sexes.The range for Males is slightly larger than for Females, which suggests that scores for Males are more spread out. There do not appear to be any outliers indicated for either Females or Males, suggesting that all the scores fall within a relatively expected range. The male has wider IQR than Female’s. Also, both graphs are skewed to the right.
+=======
+=======
+## Relationship Between African American and Decile Score
+
+```{r}
+
+df <- compas_scores_clean %>% 
+  mutate(AA = if_else(Race == "African-American" | Race == "African-Am", 1, 0))
+
+race_model <- lm(DecileScore ~ AA, data = df)
+summary(race_model)
+predictions <- predict(race_model, df)
+
+ggplot(compas_scores_clean, aes(x=Race, y=DecileScore)) +
+  geom_boxplot() +
+  labs(title="Distribution of DecileScores by Race",
+       x="Race",
+       y="DecileScore") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+```
+>>>>>>> 2abccc1 (updated blog post 4)
