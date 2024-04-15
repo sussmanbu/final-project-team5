@@ -6,9 +6,11 @@ date: "2024-04-10"
 date-modified: "2024-04-10"
 draft: FALSE
 ---
-Cleaning Second Data Set
+## Cleaning Second Data Set
 ```{r}
 library(tidyverse)
+library(pROC)
+
 iowa_data <- read_csv(here::here("dataset", "Iowa_Probation_Recidivism_Status_20240403.csv"))
 iowa_data_clean <- iowa_data %>%
   select(sex = Sex, race = Race, age = Age, reincarcerated = Reincarcerated)
@@ -17,6 +19,39 @@ new_compas <- read_csv(here::here("dataset", "compas-scores-two-years-violent.cs
 new_compas_clean <- new_compas %>%
   select(sex, age, race, reincarcerated)
 write_csv(new_compas_clean, file = here::here("dataset", "new-compas-clean.csv"))
-
-
 ```
+
+## Merging Data Set
+```{r}
+new_compas_clean <- new_compas_clean %>% mutate(state = "Florida")
+iowa_data_clean <- iowa_data_clean %>% mutate(state = "Iowa")
+combined_data <- bind_rows(new_compas_clean, iowa_data_clean)
+write_csv(combined_data, file = here::here("dataset", "combined-data.csv"))
+summary(combined_data)
+```
+
+## Further Analysis
+```{r}
+ggplot(combined_data, aes(x = age)) + geom_histogram(binwidth = 5, fill = "blue", color = "black") +
+  ggtitle("Age Distribution") + xlab("Age") + ylab("Frequency")
+ggplot(combined_data, aes(x = sex, fill = reincarcerated)) + geom_bar(position = "fill") +
+  ggtitle("Reincarceration Rate by Sex") + ylab("Proportion")
+ggplot(combined_data, aes(x = race, fill = reincarcerated)) + geom_bar(position = "fill") +
+  ggtitle("Reincarceration Rate by Race") + ylab("Proportion") + theme(axis.text.x = element_text(angle = 45, hjust = 1))
+
+chisq.test(table(combined_data$sex, combined_data$reincarcerated))
+chisq.test(table(combined_data$race, combined_data$reincarcerated))
+
+combined_data$sex <- factor(combined_data$sex)
+combined_data$sex <- relevel(combined_data$sex, ref = "Male")
+combined_data$race <- factor(combined_data$race)
+combined_data$race <- relevel(combined_data$race, ref = "White")
+combined_data$state <- factor(combined_data$state)
+combined_data$state <- relevel(combined_data$state, ref = "Iowa")
+model <- glm(reincarcerated ~ sex + age + race + state, data = combined_data, family = "binomial")
+summary(model)
+```
+
+From the Chi-squared test for sex and race with incarcerated, the results indicate statistically significant associations between both sex and race with reincarceration status in our combined dataset, as both p-values are well below the conventional alpha level of 0.05. The result from Chi-squared test for sex with incarcerated suggests that there is a significant association between an individual's sex and their likelihood of being reincarcerated. The data would likely show that one sex is more prone to reincarceration than the other. And the result from Chi-squared test for race with incarcerated indicates a significant association between an individual's race and their likelihood of being reincarcerated. Different races may have different reincarceration rates.
+
+The logistic regression analysis on the dataset reveals significant insights into the factors influencing reincarceration rates. "Male", "White" and "Iowa" are the majority categories in sex, race, and state, and using them as the baseline would provide a point of comparison against the other categories, which can be quite informative, especially in highlighting differences or disproportionalities. The model highlights substantial sex-based differences in reincarceration odds, with females showing significantly lower odds compared to males. Age is another influential factor; younger individuals are more likely to be reincarcerated, underscoring the importance of targeted interventions for youth. Racial disparities are pronounced: American Indians or Alaska Natives exhibit higher reincarceration odds compared to Whites, while Asian or Pacific Islanders and Hispanics have lower odds. Blacks show slightly higher odds than Whites, highlighting nuanced differences among racial groups. Additionally, regional variations are evident, as individuals from Florida are significantly more likely to be reincarcerated than those from Iowa. The model's excellent fit, as indicated by AIC and changes in deviance, suggests that it effectively captures the underlying patterns in the data.
