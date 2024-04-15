@@ -6,4 +6,17 @@ date: "2024-04-10"
 date-modified: "2024-04-10"
 draft: FALSE
 ---
+Cleaning Second Data Set
+```{r}
+library(tidyverse)
+iowa_data <- read_csv(here::here("dataset", "Iowa_Probation_Recidivism_Status_20240403.csv"))
+iowa_data_clean <- iowa_data %>%
+  select(sex = Sex, race = Race, age = Age, reincarcerated = Reincarcerated)
+write_csv(iowa_data_clean, file = here::here("dataset", "iowa-data-clean.csv"))
+new_compas <- read_csv(here::here("dataset", "compas-scores-two-years-violent.csv"))
+new_compas_clean <- new_compas %>%
+  select(sex, age, race, reincarcerated)
+write_csv(new_compas_clean, file = here::here("dataset", "new-compas-clean.csv"))
 
+
+```
