@@ -55,3 +55,41 @@ summary(model)
 From the Chi-squared test for sex and race with incarcerated, the results indicate statistically significant associations between both sex and race with reincarceration status in our combined dataset, as both p-values are well below the conventional alpha level of 0.05. The result from Chi-squared test for sex with incarcerated suggests that there is a significant association between an individual's sex and their likelihood of being reincarcerated. The data would likely show that one sex is more prone to reincarceration than the other. And the result from Chi-squared test for race with incarcerated indicates a significant association between an individual's race and their likelihood of being reincarcerated. Different races may have different reincarceration rates.
 
 The logistic regression analysis on the dataset reveals significant insights into the factors influencing reincarceration rates. "Male", "White" and "Iowa" are the majority categories in sex, race, and state, and using them as the baseline would provide a point of comparison against the other categories, which can be quite informative, especially in highlighting differences or disproportionalities. The model highlights substantial sex-based differences in reincarceration odds, with females showing significantly lower odds compared to males. Age is another influential factor; younger individuals are more likely to be reincarcerated, underscoring the importance of targeted interventions for youth. Racial disparities are pronounced: American Indians or Alaska Natives exhibit higher reincarceration odds compared to Whites, while Asian or Pacific Islanders and Hispanics have lower odds. Blacks show slightly higher odds than Whites, highlighting nuanced differences among racial groups. Additionally, regional variations are evident, as individuals from Florida are significantly more likely to be reincarcerated than those from Iowa. The model's excellent fit, as indicated by AIC and changes in deviance, suggests that it effectively captures the underlying patterns in the data.
+
+## Code for Post 6
+
+## Continue Analysis on Combined Dataset 
+```{r}
+library(caret)
+predicted_probabilities <- predict(model, newdata = combined_data, type = "response")
+roc_curve <- roc(response = combined_data$reincarcerated, predictor = predicted_probabilities)
+plot(roc_curve, main = "ROC Curve")
+auc(roc_curve)
+```
+
+```{r}
+data_florida <- filter(combined_data, state == "Florida")
+model_florida <- glm(reincarcerated ~ sex + age + race, data = data_florida, family = "binomial")
+summary(model_florida)
+
+data_iowa <- filter(combined_data, state == "Iowa")
+model_iowa <- glm(reincarcerated ~ sex + age + race, data = data_iowa, family = "binomial")
+summary(model_iowa)
+```
+
+```{r}
+proportion_data <- combined_data %>%
+  group_by(state, race) %>%
+  summarise(Reoffence_Proportion = mean(reincarcerated, na.rm = TRUE)) %>%
+  ungroup()
+
+# Plot the proportions
+ggplot(proportion_data, aes(x = race, y = Reoffence_Proportion, fill = race)) +
+  geom_bar(stat = "identity", position = position_dodge()) +
+  facet_wrap(~ state) +
+  labs(title = "Proportion of Different Races Reoffended in Each State",
+       x = "Race",
+       y = "Proportion of Reoffence") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1)) 
+```
