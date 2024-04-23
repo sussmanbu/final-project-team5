@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>MA 415 Final Project Team 5 - MA [46]15 Final Project</title>
+<title>MA 415 Final Project Team 5 – prelim</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,6 +20,40 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -30,8 +64,6 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<script src="site_libs/quarto-listing/list.min.js"></script>
-<script src="site_libs/quarto-listing/quarto-listing.js"></script>
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -61,43 +93,12 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
-<script>
 
-  window.document.addEventListener("DOMContentLoaded", function (_event) {
-    const listingTargetEl = window.document.querySelector('#listing-listing .list');
-    if (!listingTargetEl) {
-      // No listing discovered, do not attach.
-      return; 
-    }
-
-    const options = {
-      valueNames: ['listing-date','listing-title','listing-author','listing-subtitle','listing-image','listing-description','listing-categories',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
-      
-      searchColumns: ["listing-date","listing-title","listing-author","listing-subtitle","listing-image","listing-description","listing-categories"],
-    };
-
-    window['quarto-listings'] = window['quarto-listings'] || {};
-    window['quarto-listings']['listing-listing'] = new List('listing-listing', options);
-
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  });
-
-  window.addEventListener('hashchange',() => {
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  })
-  </script>
-
-  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 <link rel="stylesheet" href="styles.css">
 </head>
 
-<body class="nav-fixed">
+<body class="nav-fixed fullcontent">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -138,298 +139,70 @@ ul.task-list li input[type="checkbox"] {
     </nav>
 </header>
 <!-- content -->
-<header id="title-block-header" class="quarto-title-block default page-columns page-full">
-  <div class="quarto-title-banner page-columns page-full">
-    <div class="quarto-title column-page-left">
-      <h1 class="title">MA [46]15 Final Project</h1>
-                      </div>
-  </div>
-    
-  
-  <div class="quarto-title-meta">
-
-      
-    
-      
-    </div>
-    
-  
-  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
-    <h5 class="quarto-listing-category-title">Categories</h5><div class="quarto-listing-category category-default"><div class="category" data-category="">All <span class="quarto-category-count">(9)</span></div></div></div>
+    
 <!-- main -->
-<main class="content quarto-banner-title-block column-page-left" id="quarto-document-content">
+<main class="content" id="quarto-document-content">
 
 
 
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+✔ dplyr     1.1.4     ✔ readr     2.1.5
+✔ forcats   1.0.0     ✔ stringr   1.5.1
+✔ ggplot2   3.4.4     ✔ tibble    3.2.1
+✔ lubridate 1.9.3     ✔ tidyr     1.3.0
+✔ purrr     1.0.2     
+── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+✖ dplyr::filter() masks stats::filter()
+✖ dplyr::lag()    masks stats::lag()
+ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data-ignore/compas-scores-raw.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Rows: 60843 Columns: 28
+── Column specification ────────────────────────────────────────────────────────
+Delimiter: ","
+chr (18): Agency_Text, LastName, FirstName, MiddleName, Sex_Code_Text, Ethni...
+dbl (10): Person_ID, AssessmentID, Case_ID, ScaleSet_ID, RecSupervisionLevel...
 
-<p><img src="images/data-science.png" class="img-fluid"></p>
-<section id="final-project-due-may-7-2024-at-1159pm." class="level1">
-<h1>Final Project due May 7, 2024 at 11:59pm.</h1>
+ℹ Use `spec()` to retrieve the full column specification for this data.
+ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>df </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 60,843 × 28
+   Person_ID AssessmentID Case_ID Agency_Text LastName FirstName MiddleName
+       &lt;dbl&gt;        &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt;       &lt;chr&gt;    &lt;chr&gt;     &lt;chr&gt;     
+ 1     50844        57167   51950 PRETRIAL    Fisher   Kevin     NULL      
+ 2     50844        57167   51950 PRETRIAL    Fisher   Kevin     NULL      
+ 3     50844        57167   51950 PRETRIAL    Fisher   Kevin     NULL      
+ 4     50848        57174   51956 PRETRIAL    KENDALL  KEVIN     NULL      
+ 5     50848        57174   51956 PRETRIAL    KENDALL  KEVIN     NULL      
+ 6     50848        57174   51956 PRETRIAL    KENDALL  KEVIN     NULL      
+ 7     50855        57181   51963 PRETRIAL    DAYES    DANIEL    NULL      
+ 8     50855        57181   51963 PRETRIAL    DAYES    DANIEL    NULL      
+ 9     50855        57181   51963 PRETRIAL    DAYES    DANIEL    NULL      
+10     50850        57176   51958 PRETRIAL    Debe     Mikerlie  George    
+# ℹ 60,833 more rows
+# ℹ 21 more variables: Sex_Code_Text &lt;chr&gt;, Ethnic_Code_Text &lt;chr&gt;,
+#   DateOfBirth &lt;chr&gt;, ScaleSet_ID &lt;dbl&gt;, ScaleSet &lt;chr&gt;,
+#   AssessmentReason &lt;chr&gt;, Language &lt;chr&gt;, LegalStatus &lt;chr&gt;,
+#   CustodyStatus &lt;chr&gt;, MaritalStatus &lt;chr&gt;, Screening_Date &lt;chr&gt;,
+#   RecSupervisionLevel &lt;dbl&gt;, RecSupervisionLevelText &lt;chr&gt;, Scale_ID &lt;dbl&gt;,
+#   DisplayText &lt;chr&gt;, RawScore &lt;dbl&gt;, DecileScore &lt;dbl&gt;, ScoreText &lt;chr&gt;, …</code></pre>
+</div>
+</div>
 
 
 
-</section>
-
-<div class="quarto-listing quarto-listing-container-default" id="listing-listing">
-<div class="list quarto-listing-default">
-<div class="quarto-post image-right" data-index="0" data-listing-date-sort="1713758400000" data-listing-file-modified-sort="1713842399201" data-listing-date-modified-sort="1713758400000" data-listing-reading-time-sort="3">
-<div class="thumbnail">
-<p><a href="./posts/2024-04-22-post-6/post-6.html"> <div class="listing-item-img-placeholder card-img-top" >&nbsp;</div> </a></p>
-</div>
-<div class="body">
-<a href="./posts/2024-04-22-post-6/post-6.html">
-<h3 class="no-anchor listing-title">
-Post 6
-</h3>
-<div class="listing-subtitle">
-
-</div>
-<div class="listing-description">
-The ROC curve’s shape indicates that our logistic regression model has a good capability to discriminate between those individuals who were reincarcerated and those who were…
-</div>
-</a>
-</div>
-<div class="metadata">
-<a href="./posts/2024-04-22-post-6/post-6.html">
-<div class="listing-date">
-Apr 22, 2024
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="1" data-listing-date-sort="1712721600000" data-listing-file-modified-sort="1713841883764" data-listing-date-modified-sort="1712721600000" data-listing-reading-time-sort="4">
-<div class="thumbnail">
-<p><a href="./posts/2024-04-10-post5/post5.html"> <p class="card-img-top"><img src="posts/2024-04-10-post5/post5_files/figure-html/unnamed-chunk-3-1.png"  class="thumbnail-image card-img"/></p> </a></p>
-</div>
-<div class="body">
-<a href="./posts/2024-04-10-post5/post5.html">
-<h3 class="no-anchor listing-title">
-Post-5
-</h3>
-<div class="listing-subtitle">
-Merging Data Sets
-</div>
-<div class="listing-description">
-From the Chi-squared test for sex and race with incarcerated, the results indicate statistically significant associations between both sex and race with reincarceration…
-</div>
-</a>
-</div>
-<div class="metadata">
-<a href="./posts/2024-04-10-post5/post5.html">
-<div class="listing-date">
-Apr 10, 2024
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="2" data-listing-date-sort="1712116800000" data-listing-file-modified-sort="1713803386612" data-listing-date-modified-sort="1712116800000" data-listing-reading-time-sort="2">
-<div class="thumbnail">
-<p><a href="./posts/2024-04-03-blog-post-4/blog-post-4.html"> <p class="card-img-top"><img src="posts/2024-04-03-blog-post-4/blog-post-4_files/figure-html/unnamed-chunk-1-1.png"  class="thumbnail-image card-img"/></p> </a></p>
-</div>
-<div class="body">
-<a href="./posts/2024-04-03-blog-post-4/blog-post-4.html">
-<h3 class="no-anchor listing-title">
-Blog Post 4
-</h3>
-<div class="listing-subtitle">
-Continuing Exploratory Analysis
-</div>
-<div class="listing-description">
-Both Female and Male categories have median scores (indicated by the line inside the box) that are approximately at the same level, suggesting that the central tendency of…
-</div>
-</a>
-</div>
-<div class="metadata">
-<a href="./posts/2024-04-03-blog-post-4/blog-post-4.html">
-<div class="listing-date">
-Apr 3, 2024
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="3" data-listing-date-sort="1711684800000" data-listing-file-modified-sort="1713803386612" data-listing-date-modified-sort="1711684800000" data-listing-reading-time-sort="3">
-<div class="thumbnail">
-<p><a href="./posts/2024-03-29-post-3-project-update/post-3-project-update.html"> <p class="card-img-top"><img src="posts/2024-03-29-post-3-project-update/post-3-project-update_files/figure-html/unnamed-chunk-1-1.png"  class="thumbnail-image card-img"/></p> </a></p>
-</div>
-<div class="body">
-<a href="./posts/2024-03-29-post-3-project-update/post-3-project-update.html">
-<h3 class="no-anchor listing-title">
-Post 3 Project Update
-</h3>
-<div class="listing-subtitle">
-4/1 Project Update
-</div>
-<div class="listing-description">
-In this week, we spent some extra time investigating the original data source, and summarized on the data background. We further analyzed on the data in our dataset. We…
-</div>
-</a>
-</div>
-<div class="metadata">
-<a href="./posts/2024-03-29-post-3-project-update/post-3-project-update.html">
-<div class="listing-date">
-Mar 29, 2024
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="4" data-listing-date-sort="1711080000000" data-listing-file-modified-sort="1713803386612" data-listing-date-modified-sort="1711080000000" data-listing-reading-time-sort="3">
-<div class="thumbnail">
-<p><a href="./posts/2024-03-22-post-2-project-update/post-2-project-update.html"> <div class="listing-item-img-placeholder card-img-top" >&nbsp;</div> </a></p>
-</div>
-<div class="body">
-<a href="./posts/2024-03-22-post-2-project-update/post-2-project-update.html">
-<h3 class="no-anchor listing-title">
-Post 2: Project Update
-</h3>
-<div class="listing-subtitle">
-Data Background + Loading and Cleaning + Data for Equity
-</div>
-<div class="listing-description">
-After discussion, we decided to choose the data set about COMPAS Recidivism Racial Bias. We took time to investigate the data, so we found the original source about the…
-</div>
-</a>
-</div>
-<div class="metadata">
-<a href="./posts/2024-03-22-post-2-project-update/post-2-project-update.html">
-<div class="listing-date">
-Mar 22, 2024
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="5" data-listing-date-sort="1709096400000" data-listing-file-modified-sort="1713803386611" data-listing-date-modified-sort="1709096400000" data-listing-reading-time-sort="4">
-<div class="thumbnail">
-<p><a href="./posts/2024-02-28-post-1/post-1.html"> <div class="listing-item-img-placeholder card-img-top" >&nbsp;</div> </a></p>
-</div>
-<div class="body">
-<a href="./posts/2024-02-28-post-1/post-1.html">
-<h3 class="no-anchor listing-title">
-Post 1: Dataset Description
-</h3>
-<div class="listing-subtitle">
-
-</div>
-<div class="listing-description">
-Dataset link here
-</div>
-</a>
-</div>
-<div class="metadata">
-<a href="./posts/2024-02-28-post-1/post-1.html">
-<div class="listing-date">
-Feb 28, 2024
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="6" data-categories="" data-listing-date-sort="1708923600000" data-listing-file-modified-sort="1708717233981" data-listing-date-modified-sort="1708923600000" data-listing-reading-time-sort="1">
-<div class="thumbnail">
-<p><a href="./posts/2023-12-20-examples/examples.html"> <p class="card-img-top"><img src="posts/2023-12-20-examples/examples_files/figure-html/unnamed-chunk-1-1.png"  class="thumbnail-image card-img"/></p> </a></p>
-</div>
-<div class="body">
-<a href="./posts/2023-12-20-examples/examples.html">
-<h3 class="no-anchor listing-title">
-Examples
-</h3>
-<div class="listing-subtitle">
-
-</div>
-</a>
-<div class="listing-categories">
-
-</div>
-<a href="./posts/2023-12-20-examples/examples.html">
-<div class="listing-description">
-Here are some examples of changing the size of a figure.
-</div>
-</a>
-</div>
-<div class="metadata">
-<a href="./posts/2023-12-20-examples/examples.html">
-<div class="listing-date">
-Feb 26, 2024
-</div>
-<div class="listing-author">
-Daniel Sussman
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="7" data-categories="" data-listing-date-sort="1708664400000" data-listing-file-modified-sort="1708717233981" data-listing-date-modified-sort="1708664400000" data-listing-reading-time-sort="3">
-<div class="thumbnail">
-<p><a href="./posts/2023-10-15-getting-started/getting-started.html"> <div class="listing-item-img-placeholder card-img-top" >&nbsp;</div> </a></p>
-</div>
-<div class="body">
-<a href="./posts/2023-10-15-getting-started/getting-started.html">
-<h3 class="no-anchor listing-title">
-Getting started
-</h3>
-<div class="listing-subtitle">
-
-</div>
-</a>
-<div class="listing-categories">
-
-</div>
-<a href="./posts/2023-10-15-getting-started/getting-started.html">
-<div class="listing-description">
-<p>Directions to set up your website and create your first post.</p>
-</div>
-</a>
-</div>
-<div class="metadata">
-<a href="./posts/2023-10-15-getting-started/getting-started.html">
-<div class="listing-date">
-Feb 23, 2024
-</div>
-<div class="listing-author">
-Daniel Sussman
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="8" data-categories="" data-listing-date-sort="1708491600000" data-listing-file-modified-sort="1708717233981" data-listing-date-modified-sort="1708491600000" data-listing-reading-time-sort="3">
-<div class="thumbnail">
-<p><a href="./posts/2023-10-13-first-team-meeting/first-team-meeting.html"> <img src="./posts/2023-10-13-first-team-meeting/a-business-team-giving-fist-bump-in-agreement.jpg" class="thumbnail-image"> </a></p>
-</div>
-<div class="body">
-<a href="./posts/2023-10-13-first-team-meeting/first-team-meeting.html">
-<h3 class="no-anchor listing-title">
-First Team Meeting
-</h3>
-<div class="listing-subtitle">
-
-</div>
-</a>
-<div class="listing-categories">
-
-</div>
-<a href="./posts/2023-10-13-first-team-meeting/first-team-meeting.html">
-<div class="listing-description">
-<p>This post details the steps you’ll take for your first team meeting.</p>
-</div>
-</a>
-</div>
-<div class="metadata">
-<a href="./posts/2023-10-13-first-team-meeting/first-team-meeting.html">
-<div class="listing-date">
-Feb 21, 2024
-</div>
-<div class="listing-author">
-Daniel Sussman
-</div>
-</a>
-</div>
-</div>
-</div>
-<div class="listing-no-matching d-none">
-No matching items
-</div>
-</div></main> <!-- /main -->
+</main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
