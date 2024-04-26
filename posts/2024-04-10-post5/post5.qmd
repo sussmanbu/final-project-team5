@@ -22,11 +22,11 @@ iowa_data <- read_csv(here::here("dataset", "Iowa_Probation_Recidivism_Status_20
 iowa_data_clean <- read_csv(here::here("dataset", "iowa-data-clean.csv"), show_col_types = FALSE)
 new_compas <- read_csv(here::here("dataset", "compas-scores-two-years-violent.csv"), show_col_types = FALSE)
 new_compas_clean <- read_csv(here::here("dataset", "new-compas-clean.csv"), show_col_types = FALSE)
+combined_data <-  read_csv(here::here("dataset", "combined-data.csv"), show_col_types = FALSE)
 ```
 
-## Merging Data Set
+## Here's the summary of the combined_data
 ```{r}
-combined_data <-  read_csv(here::here("dataset", "combined-data.csv"), show_col_types = FALSE)
 summary(combined_data)
 ```
 
