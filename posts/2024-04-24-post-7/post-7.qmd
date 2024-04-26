@@ -1,0 +1,9 @@
+---
+title: "Post 7"
+subtitle: "Final Thesis"
+author: ""
+date: "2024-04-24"
+date-modified: "2024-04-24"
+draft: FALSE
+---
+
