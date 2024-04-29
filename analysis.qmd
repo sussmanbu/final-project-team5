@@ -91,3 +91,42 @@ You will
     -   Make sure to remove excessive warnings, hide most or all code, organize with sections or
         multiple pages, use bullets, etc.
     -   This page should be self-contained, i.e. provide a description of the relevant data.
+
+----------------------------------------------------------------------------------------------------
+
+***NOTE: Everything above this should be removed before final submission.***
+
+# Investigating the COMPAS Score: Unraveling Recidivism Patterns
+
+## Introduction
+
+In the intricate landscape of criminal justice, the **COMPAS (Correctional Offender Management
+Profiling for Alternative Sanctions)** score stands as a pivotal metric. Judges and law enforcement
+officers rely on it to assess the likelihood of an individual reoffending—essentially predicting
+their propensity to commit future crimes. But behind this seemingly objective tool lies a web of
+complexities, biases, and ethical dilemmas.
+
+Our data analysis endeavors to shed light on the relationship between the COMPAS score and several
+key factors: **ethnic race, sex, and age**. By delving into this trove of information, we aim to
+unravel patterns, expose potential disparities, and contribute to a more informed discourse on
+recidivism.
+
+## The Motivation
+
+1.  **Justice or Prejudice?**\
+    The COMPAS score, while ostensibly neutral, has faced scrutiny for potential racial and gender
+    biases. Are certain demographics disproportionately labeled as high-risk offenders? Our
+    investigation seeks to answer this critical question.
+
+2.  **Age and Recidivism:**\
+    Does age play a role in the likelihood of reoffending? We explore whether the COMPAS score
+    treats youthful offenders differently from their older counterparts.
+
+3.  **Ground Truth vs. Prediction:**\
+    Our dataset not only includes the COMPAS score but also tracks whether individuals have actually
+    reoffended. By comparing these ground truth outcomes with the predicted scores, we can assess
+    the model’s accuracy and uncover any discrepancies.
+
+## Modeling and Inference
+
+## Flaws and Limitations
