@@ -50,6 +50,79 @@ combined_data$state <- factor(combined_data$state)
 combined_data$state <- relevel(combined_data$state, ref = "Iowa")
 model <- glm(reincarcerated ~ sex + age + race + state, data = combined_data, family = "binomial")
 summary(model)
+
+#Effect of Age on Probability of Reincarceration by Race
+#Male
+model_without_state <- glm(reincarcerated ~ sex + age + race, family = "binomial", data = combined_data)
+min_age <- min(combined_data$age, na.rm = TRUE)
+max_age <- max(combined_data$age, na.rm = TRUE)
+new_data <- expand.grid(
+  sex = factor("Male", levels = levels(combined_data$sex)),
+  age = seq(min_age, max_age, length.out = 100),
+  race = levels(combined_data$race)
+)
+
+new_data$probability <- predict(model_without_state, newdata = new_data, type = "response")
+
+ggplot(new_data, aes(x = age, y = probability, color = race)) +
+  geom_line() +
+  labs(title = "Effect of Age on Probability of Reincarceration by Race_Males",
+       x = "Age",
+       y = "Probability of Reincarceration") +
+  scale_color_brewer(palette = "Set1") +
+  theme_minimal()
+#Female
+min_age <- min(combined_data$age, na.rm = TRUE)
+max_age <- max(combined_data$age, na.rm = TRUE)
+new_data <- expand.grid(
+  sex = factor("Female", levels = levels(combined_data$sex)),
+  age = seq(min_age, max_age, length.out = 100),
+  race = levels(combined_data$race)
+)
+
+new_data$probability <- predict(model_without_state, newdata = new_data, type = "response")
+
+ggplot(new_data, aes(x = age, y = probability, color = race)) +
+  geom_line() +
+  labs(title = "Effect of Age on Probability of Reincarceration by Race_Males",
+       x = "Age",
+       y = "Probability of Reincarceration") +
+  scale_color_brewer(palette = "Set1") +
+  theme_minimal()
+
+#Probability of Reincarceration by Race
+#Male
+new_data <- data.frame(
+  sex = factor("Male", levels = levels(combined_data$sex)),
+  age = mean(combined_data$age, na.rm = TRUE),
+  race = levels(combined_data$race)
+)
+
+new_data$probability <- predict(model_without_state, newdata = new_data, type = "response")
+
+ggplot(new_data, aes(x = race, y = probability, fill = race)) +
+  geom_col() +
+  labs(title = "Probability of Reincarceration by Race_Male",
+       x = "Race",
+       y = "Probability of Reincarceration") +
+  theme_minimal()+
+  theme(axis.text.x = element_text(angle = 90, hjust = 1)) 
+#Female
+new_data <- data.frame(
+  sex = factor("Female", levels = levels(combined_data$sex)),
+  age = mean(combined_data$age, na.rm = TRUE),
+  race = levels(combined_data$race)
+)
+
+new_data$probability <- predict(model_without_state, newdata = new_data, type = "response")
+
+ggplot(new_data, aes(x = race, y = probability, fill = race)) +
+  geom_col() +
+  labs(title = "Probability of Reincarceration by Race_Female",
+       x = "Race",
+       y = "Probability of Reincarceration") +
+  theme_minimal()+
+  theme(axis.text.x = element_text(angle = 90, hjust = 1)) 
 ```
 
 From the Chi-squared test for sex and race with incarcerated, the results indicate statistically significant associations between both sex and race with reincarceration status in our combined dataset, as both p-values are well below the conventional alpha level of 0.05. The result from Chi-squared test for sex with incarcerated suggests that there is a significant association between an individual's sex and their likelihood of being reincarcerated. The data would likely show that one sex is more prone to reincarceration than the other. And the result from Chi-squared test for race with incarcerated indicates a significant association between an individual's race and their likelihood of being reincarcerated. Different races may have different reincarceration rates.
@@ -68,13 +141,153 @@ auc(roc_curve)
 ```
 
 ```{r}
+#Florida Model
 data_florida <- filter(combined_data, state == "Florida")
 model_florida <- glm(reincarcerated ~ sex + age + race, data = data_florida, family = "binomial")
 summary(model_florida)
+#Effect of Age on Probability of Reincarceration in Florida by Race
+#Male
+new_data <- expand.grid(
+  sex = factor("Male", levels = levels(data_florida$sex)),
+  age = seq(min(data_florida$age), max(data_florida$age), length.out = 100),
+  race = levels(data_florida$race)
+)
 
+new_data$probability <- predict(model_florida, newdata = new_data, type = "response")
+
+ggplot(new_data, aes(x = age, y = probability, color = race)) +
+  geom_line() +
+  labs(title = "Effect of Age on Probability of Reincarceration in Florida by Race_Male",
+       x = "Age",
+       y = "Probability of Reincarceration") +
+  scale_color_brewer(palette = "Set1") +
+  theme_minimal()
+#Female
+new_data <- expand.grid(
+  sex = factor("Female", levels = levels(data_florida$sex)),
+  age = seq(min(data_florida$age), max(data_florida$age), length.out = 100),
+  race = levels(data_florida$race)
+)
+
+new_data$probability <- predict(model_florida, newdata = new_data, type = "response")
+
+ggplot(new_data, aes(x = age, y = probability, color = race)) +
+  geom_line() +
+  labs(title = "Effect of Age on Probability of Reincarceration in Florida by Race_Female",
+       x = "Age",
+       y = "Probability of Reincarceration") +
+  scale_color_brewer(palette = "Set1") +
+  theme_minimal()
+#Probability of Reincarceration by Race in Florida
+#Male
+new_data <- data.frame(
+  sex = factor("Male", levels = levels(data_florida$sex)),
+  age = mean(data_florida$age),
+  race = levels(data_florida$race)
+)
+
+new_data$probability <- predict(model_florida, newdata = new_data, type = "response")
+
+ggplot(new_data, aes(x = race, y = probability, fill = race)) +
+  geom_col() +
+  labs(title = "Probability of Reincarceration by Race in Florida_Male",
+       x = "Race",
+       y = "Probability of Reincarceration") +
+  theme_minimal()+
+  theme(axis.text.x = element_text(angle = 90, hjust = 1)) 
+#Female
+new_data <- data.frame(
+  sex = factor("Female", levels = levels(data_florida$sex)),
+  age = mean(data_florida$age),
+  race = levels(data_florida$race)
+)
+
+new_data$probability <- predict(model_florida, newdata = new_data, type = "response")
+
+ggplot(new_data, aes(x = race, y = probability, fill = race)) +
+  geom_col() +
+  labs(title = "Probability of Reincarceration by Race in Florida_Female",
+       x = "Race",
+       y = "Probability of Reincarceration") +
+  theme_minimal()+
+  theme(axis.text.x = element_text(angle = 90, hjust = 1)) 
+
+#Iowa Model
 data_iowa <- filter(combined_data, state == "Iowa")
 model_iowa <- glm(reincarcerated ~ sex + age + race, data = data_iowa, family = "binomial")
 summary(model_iowa)
+#Effect of Age on Probability of Reincarceration in Florida by Race
+#Male
+min_age <- min(data_iowa$age, na.rm = TRUE)
+max_age <- max(data_iowa$age, na.rm = TRUE)
+
+new_data <- expand.grid(
+  sex = factor("Male", levels = levels(data_iowa$sex)),
+  age = seq(min_age, max_age, length.out = 100),
+  race = factor(levels(data_iowa$race), levels = levels(data_iowa$race))
+)
+
+new_data$probability <- predict(model_iowa, newdata = new_data, type = "response")
+
+ggplot(new_data, aes(x = age, y = probability, color = race)) +
+  geom_line() +
+  labs(title = "Effect of Age on Probability of Reincarceration in Florida by Race_Male",
+       x = "Age",
+       y = "Probability of Reincarceration") +
+  scale_color_brewer(palette = "Set1") +
+  theme_minimal()
+#Female
+min_age <- min(data_iowa$age, na.rm = TRUE)
+max_age <- max(data_iowa$age, na.rm = TRUE)
+
+new_data <- expand.grid(
+  sex = factor("Female", levels = levels(data_iowa$sex)),
+  age = seq(min_age, max_age, length.out = 100),
+  race = factor(levels(data_iowa$race), levels = levels(data_iowa$race))
+)
+
+new_data$probability <- predict(model_iowa, newdata = new_data, type = "response")
+
+ggplot(new_data, aes(x = age, y = probability, color = race)) +
+  geom_line() +
+  labs(title = "Effect of Age on Probability of Reincarceration in Florida by Race_Female",
+       x = "Age",
+       y = "Probability of Reincarceration") +
+  scale_color_brewer(palette = "Set1") +
+  theme_minimal()
+#Probability of Reincarceration by Race in Iowa
+#Male
+new_data <- data.frame(
+  sex = factor("Male", levels = levels(data_iowa$sex)),
+  age = mean(data_iowa$age, na.rm = TRUE),
+  race = levels(data_iowa$race)
+)
+
+new_data$probability <- predict(model_iowa, newdata = new_data, type = "response")
+
+ggplot(new_data, aes(x = race, y = probability, fill = race)) +
+  geom_col() +
+  labs(title = "Probability of Reincarceration by Race in Iowa_Male",
+       x = "Race",
+       y = "Probability of Reincarceration") +
+  theme_minimal()+
+  theme(axis.text.x = element_text(angle = 90, hjust = 1)) 
+#Female
+new_data <- data.frame(
+  sex = factor("Female", levels = levels(data_iowa$sex)),
+  age = mean(data_iowa$age, na.rm = TRUE),
+  race = levels(data_iowa$race)
+)
+
+new_data$probability <- predict(model_iowa, newdata = new_data, type = "response")
+
+ggplot(new_data, aes(x = race, y = probability, fill = race)) +
+  geom_col() +
+  labs(title = "Probability of Reincarceration by Race in Iowa_Female",
+       x = "Race",
+       y = "Probability of Reincarceration") +
+  theme_minimal()+
+  theme(axis.text.x = element_text(angle = 90, hjust = 1)) 
 ```
 
 ```{r}
