@@ -6,8 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="description" content="Here we provide a detailed analysis using more sophisticated statistics techniques.">
 
-<title>MA 415 Final Project Team 5 – analysis</title>
+<title>MA 415 Final Project Team 5 - Analysis</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -64,7 +65,7 @@ ul.task-list li input[type="checkbox"] {
 <link rel="stylesheet" href="styles.css">
 </head>
 
-<body class="nav-fixed fullcontent">
+<body class="nav-fixed">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -91,7 +92,7 @@ ul.task-list li input[type="checkbox"] {
   </li>  
   <li class="nav-item">
     <a class="nav-link active" href="./analysis.html" rel="" target="" aria-current="page">
- <span class="menu-text">draft: false</span></a>
+ <span class="menu-text">Analysis</span></a>
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="./data.html" rel="" target="">
@@ -108,14 +109,49 @@ ul.task-list li input[type="checkbox"] {
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#example-of-loading-data" id="toc-example-of-loading-data" class="nav-link active" data-scroll-target="#example-of-loading-data">Example of loading data</a></li>
+  <li><a href="#note-on-attribution" id="toc-note-on-attribution" class="nav-link" data-scroll-target="#note-on-attribution">Note on Attribution</a></li>
+  <li><a href="#rubric-on-this-page" id="toc-rubric-on-this-page" class="nav-link" data-scroll-target="#rubric-on-this-page">Rubric: On this page</a></li>
+  <li><a href="#investigating-the-compas-score-unraveling-recidivism-patterns" id="toc-investigating-the-compas-score-unraveling-recidivism-patterns" class="nav-link" data-scroll-target="#investigating-the-compas-score-unraveling-recidivism-patterns">Investigating the COMPAS Score: Unraveling Recidivism Patterns</a>
+  <ul class="collapse">
+  <li><a href="#introduction" id="toc-introduction" class="nav-link" data-scroll-target="#introduction">Introduction</a></li>
+  <li><a href="#the-motivation" id="toc-the-motivation" class="nav-link" data-scroll-target="#the-motivation">The Motivation</a></li>
+  <li><a href="#modeling-and-inference" id="toc-modeling-and-inference" class="nav-link" data-scroll-target="#modeling-and-inference">Modeling and Inference</a></li>
+  <li><a href="#flaws-and-limitations" id="toc-flaws-and-limitations" class="nav-link" data-scroll-target="#flaws-and-limitations">Flaws and Limitations</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Analysis</h1>
+</div>
+
+<div>
+  <div class="description">
+    Here we provide a detailed analysis using more sophisticated statistics techniques.
+  </div>
+</div>
 
 
-<p>git — title: Analysis description: Here we provide a detailed analysis using more sophisticated statistics techniques. toc: true draft: false</p>
-<hr>
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+</header>
+
 <p><img src="https://upload.wikimedia.org/wikipedia/commons/7/77/Pebbleswithquarzite.jpg" class="img-fluid"></p>
 <p>This comes from the file <code>analysis.qmd</code>.</p>
 <p>We describe here our detailed data analysis. This page will provide an overview of what questions you addressed, illustrations of relevant aspects of the data with tables and figures, and a statistical model that attempts to answer part of the question. You’ll also reflect on next steps and further analysis.</p>
@@ -174,8 +210,35 @@ ul.task-list li input[type="checkbox"] {
 <li>This page should be self-contained, i.e.&nbsp;provide a description of the relevant data.</li>
 </ul></li>
 </ul>
+<hr>
+<p><strong><em>NOTE: Everything above this should be removed before final submission.</em></strong></p>
+</section>
+<section id="investigating-the-compas-score-unraveling-recidivism-patterns" class="level1">
+<h1>Investigating the COMPAS Score: Unraveling Recidivism Patterns</h1>
+<section id="introduction" class="level2">
+<h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
+<p>In the intricate landscape of criminal justice, the <strong>COMPAS (Correctional Offender Management Profiling for Alternative Sanctions)</strong> score stands as a pivotal metric. Judges and law enforcement officers rely on it to assess the likelihood of an individual reoffending—essentially predicting their propensity to commit future crimes. But behind this seemingly objective tool lies a web of complexities, biases, and ethical dilemmas.</p>
+<p>Our data analysis endeavors to shed light on the relationship between the COMPAS score and several key factors: <strong>ethnic race, sex, and age</strong>. By delving into this trove of information, we aim to unravel patterns, expose potential disparities, and contribute to a more informed discourse on recidivism.</p>
+</section>
+<section id="the-motivation" class="level2">
+<h2 class="anchored" data-anchor-id="the-motivation">The Motivation</h2>
+<ol type="1">
+<li><p><strong>Justice or Prejudice?</strong><br>
+The COMPAS score, while ostensibly neutral, has faced scrutiny for potential racial and gender biases. Are certain demographics disproportionately labeled as high-risk offenders? Our investigation seeks to answer this critical question.</p></li>
+<li><p><strong>Age and Recidivism:</strong><br>
+Does age play a role in the likelihood of reoffending? We explore whether the COMPAS score treats youthful offenders differently from their older counterparts.</p></li>
+<li><p><strong>Ground Truth vs.&nbsp;Prediction:</strong><br>
+Our dataset not only includes the COMPAS score but also tracks whether individuals have actually reoffended. By comparing these ground truth outcomes with the predicted scores, we can assess the model’s accuracy and uncover any discrepancies.</p></li>
+</ol>
+</section>
+<section id="modeling-and-inference" class="level2">
+<h2 class="anchored" data-anchor-id="modeling-and-inference">Modeling and Inference</h2>
+</section>
+<section id="flaws-and-limitations" class="level2">
+<h2 class="anchored" data-anchor-id="flaws-and-limitations">Flaws and Limitations</h2>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->
