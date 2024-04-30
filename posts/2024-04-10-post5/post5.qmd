@@ -7,13 +7,8 @@ date-modified: "2024-04-10"
 draft: FALSE
 ---
 
-## Installing pRPOC and caret if you haven't
-```{r}
-install.packages("pROC")
-install.packages("caret")
-```
-
 ## Loading the dataset
+
 ```{r}
 library(tidyverse)
 library(pROC)
@@ -26,11 +21,13 @@ combined_data <-  read_csv(here::here("dataset", "combined-data.csv"), show_col_
 ```
 
 ## Here's the summary of the combined_data
+
 ```{r}
 summary(combined_data)
 ```
 
 ## Further Analysis
+
 ```{r}
 ggplot(combined_data, aes(x = age)) + geom_histogram(binwidth = 5, fill = "blue", color = "black") +
   ggtitle("Age Distribution") + xlab("Age") + ylab("Frequency")
@@ -84,7 +81,7 @@ new_data$probability <- predict(model_without_state, newdata = new_data, type = 
 
 ggplot(new_data, aes(x = age, y = probability, color = race)) +
   geom_line() +
-  labs(title = "Effect of Age on Probability of Reincarceration by Race_Males",
+  labs(title = "Effect of Age on Probability of Reincarceration by Race_Females",
        x = "Age",
        y = "Probability of Reincarceration") +
   scale_color_brewer(palette = "Set1") +
@@ -131,7 +128,8 @@ The logistic regression analysis on the dataset reveals significant insights int
 
 ## Code for Post 6
 
-## Continue Analysis on Combined Dataset 
+## Continue Analysis on Combined Dataset
+
 ```{r}
 library(caret)
 predicted_probabilities <- predict(model, newdata = combined_data, type = "response")
