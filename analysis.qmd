@@ -220,4 +220,102 @@ race accounts for only about 6% of the variation in decile scores, suggesting ot
 play a significant role. The accompanying boxplot clearly illustrates higher median scores for
 African-Americans, indicating a potential systemic trend that would be worth investigating further.
 
+```{r}
+combined_data <-  read_csv(here::here("dataset", "combined-data.csv"), show_col_types = FALSE)
+
+ggplot(combined_data, aes(x = age)) + geom_histogram(binwidth = 5, fill = "blue", color = "black") +
+  ggtitle("Age Distribution") + xlab("Age") + ylab("Frequency")
+ggplot(combined_data, aes(x = sex, fill = reincarcerated)) + geom_bar(position = "fill") +
+  ggtitle("Reincarceration Rate by Sex") + ylab("Proportion")
+ggplot(combined_data, aes(x = race, fill = reincarcerated)) + geom_bar(position = "fill") +
+  ggtitle("Reincarceration Rate by Race") + ylab("Proportion") + theme(axis.text.x = element_text(angle = 45, hjust = 1))
+
+chisq.test(table(combined_data$sex, combined_data$reincarcerated))
+chisq.test(table(combined_data$race, combined_data$reincarcerated))
+
+combined_data$sex <- factor(combined_data$sex)
+combined_data$sex <- relevel(combined_data$sex, ref = "Male")
+combined_data$race <- factor(combined_data$race)
+combined_data$race <- relevel(combined_data$race, ref = "White")
+combined_data$state <- factor(combined_data$state)
+combined_data$state <- relevel(combined_data$state, ref = "Iowa")
+model <- glm(reincarcerated ~ sex + age + race + state, data = combined_data, family = "binomial")
+summary(model)
+
+#Effect of Age on Probability of Reincarceration by Race
+#Male
+model_without_state <- glm(reincarcerated ~ sex + age + race, family = "binomial", data = combined_data)
+min_age <- min(combined_data$age, na.rm = TRUE)
+max_age <- max(combined_data$age, na.rm = TRUE)
+new_data <- expand.grid(
+  sex = factor("Male", levels = levels(combined_data$sex)),
+  age = seq(min_age, max_age, length.out = 100),
+  race = levels(combined_data$race)
+)
+
+new_data$probability <- predict(model_without_state, newdata = new_data, type = "response")
+
+ggplot(new_data, aes(x = age, y = probability, color = race)) +
+  geom_line() +
+  labs(title = "Effect of Age on Probability of Reincarceration by Race_Males",
+       x = "Age",
+       y = "Probability of Reincarceration") +
+  scale_color_brewer(palette = "Set1") +
+  theme_minimal()
+#Female
+min_age <- min(combined_data$age, na.rm = TRUE)
+max_age <- max(combined_data$age, na.rm = TRUE)
+new_data <- expand.grid(
+  sex = factor("Female", levels = levels(combined_data$sex)),
+  age = seq(min_age, max_age, length.out = 100),
+  race = levels(combined_data$race)
+)
+
+new_data$probability <- predict(model_without_state, newdata = new_data, type = "response")
+
+ggplot(new_data, aes(x = age, y = probability, color = race)) +
+  geom_line() +
+  labs(title = "Effect of Age on Probability of Reincarceration by Race_Females",
+       x = "Age",
+       y = "Probability of Reincarceration") +
+  scale_color_brewer(palette = "Set1") +
+  theme_minimal()
+
+#Probability of Reincarceration by Race
+#Male
+new_data <- data.frame(
+  sex = factor("Male", levels = levels(combined_data$sex)),
+  age = mean(combined_data$age, na.rm = TRUE),
+  race = levels(combined_data$race)
+)
+
+new_data$probability <- predict(model_without_state, newdata = new_data, type = "response")
+
+ggplot(new_data, aes(x = race, y = probability, fill = race)) +
+  geom_col() +
+  labs(title = "Probability of Reincarceration by Race_Male",
+       x = "Race",
+       y = "Probability of Reincarceration") +
+  theme_minimal()+
+  theme(axis.text.x = element_text(angle = 90, hjust = 1)) 
+#Female
+new_data <- data.frame(
+  sex = factor("Female", levels = levels(combined_data$sex)),
+  age = mean(combined_data$age, na.rm = TRUE),
+  race = levels(combined_data$race)
+)
+
+new_data$probability <- predict(model_without_state, newdata = new_data, type = "response")
+
+ggplot(new_data, aes(x = race, y = probability, fill = race)) +
+  geom_col() +
+  labs(title = "Probability of Reincarceration by Race_Female",
+       x = "Race",
+       y = "Probability of Reincarceration") +
+  theme_minimal()+
+  theme(axis.text.x = element_text(angle = 90, hjust = 1)) 
+```
+
 ## Flaws and Limitations
+
+-   Limitation on Data Source
