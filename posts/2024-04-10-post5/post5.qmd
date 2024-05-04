@@ -304,3 +304,29 @@ ggplot(proportion_data, aes(x = race, y = Reoffence_Proportion, fill = race)) +
   theme_minimal() +
   theme(axis.text.x = element_text(angle = 90, hjust = 1)) 
 ```
+
+```{r}
+# Fit the model without the sex variable
+model_no_sex <- glm(reincarcerated ~ age + race, family = "binomial", data = combined_data)
+
+# Generate new data for prediction
+min_age <- min(combined_data$age, na.rm = TRUE)
+max_age <- max(combined_data$age, na.rm = TRUE)
+new_data <- expand.grid(
+  age = seq(min_age, max_age, length.out = 100),
+  race = levels(combined_data$race)
+)
+
+# Predict the probability of reincarceration
+new_data$probability <- predict(model_no_sex, newdata = new_data, type = "response")
+
+# Plot the effects of Age on Probability of Reincarceration by Race
+library(ggplot2)
+ggplot(new_data, aes(x = age, y = probability, color = race)) +
+  geom_line() +
+  labs(title = "Effect of Age on Probability of Reincarceration by Race",
+       x = "Age",
+       y = "Probability of Reincarceration") +
+  scale_color_brewer(palette = "Set1") +
+  theme_minimal()
+```
