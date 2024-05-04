@@ -118,14 +118,18 @@ recidivism.
     biases. Are certain demographics disproportionately labeled as high-risk offenders? Our
     investigation seeks to answer this critical question.
 
-2.  **Age and Recidivism:**\
-    Does age play a role in the likelihood of reoffending? We explore whether the COMPAS score
-    treats youthful offenders differently from their older counterparts.
+    1.  Distribution of DecileScores by Race
 
-3.  **Ground Truth vs. Prediction:**\
+2.  **Ground Truth vs. Prediction:**\
     Our dataset not only includes the COMPAS score but also tracks whether individuals have actually
     reoffended. By comparing these ground truth outcomes with the predicted scores, we can assess
     the model’s accuracy and uncover any discrepancies.
+
+    1.  ROC
+
+    2.  Effect of Age - Female + Male Combined
+
+    3.  Proportion of Different Races Reoffended in Each State
 
 ## Modeling and Inference
 

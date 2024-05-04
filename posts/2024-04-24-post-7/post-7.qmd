@@ -7,3 +7,8 @@ date-modified: "2024-04-24"
 draft: FALSE
 ---
 
+## Tenative Thesis
+In the context of reincarceration, demographic variables—particularly race and age—demonstrate significant influence, with younger individuals and specific racial groups, such as Black individuals in Florida, exhibiting higher probabilities of reoffending. This pattern highlights underlying disparities in the criminal justice system, suggesting that interventions aimed at reducing reincarceration rates need to be sensitive to age and racial dynamics. Moreover, these disparities across different races suggest systemic variations in the experiences of these populations with the justice system, indicating a need for tailored policy measures that address these unique challenges within each demographic.
+
+## Polish Our Visualization
+We also worked on our webpages.
