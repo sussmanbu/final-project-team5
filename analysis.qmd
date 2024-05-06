@@ -41,7 +41,7 @@ compas_two_years_violent <- compas_two_years_violent %>%
   filter(decile_score != -1)
 ```
 
-# Investigating the COMPAS Score: Unraveling Recidivism Patterns
+# Disentangling the Factors of Recidivism: A Comprehensive Analysis of Race, Sex, Age, and COMPAS Algorithm's Performance
 
 ## Introduction
 
