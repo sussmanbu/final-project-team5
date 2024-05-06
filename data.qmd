@@ -138,6 +138,27 @@ To merge this dataset with the Iowa dataset in order to study the general trend 
 -   **age:** The individual's age at start of probation.
 -   **reincarcerated:** Indicator of whether the individual was incarcerated.
 
+Cleaning the dataset
+
+```{r Data cleaning for compas_two_years_violent}
+# rename decile_score name (weird because of the index)
+colnames(compas_two_years_violent)[which(colnames(compas_two_years_violent) == "decile_score...40")] <- "decile_score"
+
+# keep only relative fields
+compas_two_years_violent <- compas_two_years_violent  %>%
+  select(sex, age, race, decile_score, score_text, reincarcerated)
+
+# Delete records with decile_score = -1
+compas_two_years_violent <- compas_two_years_violent %>%
+  filter(decile_score != -1)
+```
+
+The above code:
+
+1.  Load the dataset and rename the field `decile_score...40` to `decile_score`. Original data consists of the index number for decile_score field.
+2.  Keep only the relative fields: `sex`, `age`, `race`, `decile_score`, `score_text` and `reincarcerated`.
+3.  Delete the 5 useless records with -1 decile_score (Those records have a lot of N/A).
+
 ```{r}
 new_compas <- read_csv(here::here("dataset", "compas-scores-two-years-violent.csv"))
 new_compas_clean <- new_compas %>%
