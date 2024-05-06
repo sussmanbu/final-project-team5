@@ -141,6 +141,7 @@ To merge this dataset with the Iowa dataset in order to study the general trend 
 Cleaning the dataset
 
 ```{r Data cleaning for compas_two_years_violent}
+compas_two_years_violent <- read_csv(here::here("dataset", "compas-scores-two-years-violent.csv"), show_col_types = FALSE)
 # rename decile_score name (weird because of the index)
 colnames(compas_two_years_violent)[which(colnames(compas_two_years_violent) == "decile_score...40")] <- "decile_score"
 
