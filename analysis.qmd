@@ -1,242 +1,134 @@
 ---
 editor: 
   markdown: 
-    wrap: 100
+    wrap: sentence
 title: "Analysis"
 description: "Here we provide a detailed analysis using more sophisticated statistics techniques."
 toc: true
 draft: false
 ---
 
-![](https://upload.wikimedia.org/wikipedia/commons/7/77/Pebbleswithquarzite.jpg)
-
-This comes from the file `analysis.qmd`.
-
-We describe here our detailed data analysis. This page will provide an overview of what questions
-you addressed, illustrations of relevant aspects of the data with tables and figures, and a
-statistical model that attempts to answer part of the question. You'll also reflect on next steps
-and further analysis.
-
-The audience for this page is someone like your class mates, so you can expect that they have some
-level of statistical and quantitative sophistication and understand ideas like linear and logistic
-regression, coefficients, confidence intervals, overfitting, etc.
-
-While the exact number of figures and tables will vary and depend on your analysis, you should
-target around 5 to 6. An overly long analysis could lead to losing points. If you want you can link
-back to your blog posts or create separate pages with more details.
-
-The style of this paper should aim to be that of an academic paper. I don't expect this to be of
-publication quality but you should keep that aim in mind. Avoid using "we" too frequently, for
-example "We also found that ...". Describe your methodology and your findings but don't describe
-your whole process.
-
-### Example of loading data
-
-The code below shows an example of loading the loan refusal data set (which you should delete at
-some point).
-
-library(tidyverse) print(getwd()) data \<- read_csv(here::here("dataset/loan_refusal_clean.csv"))
-load(here::here("dataset/loan_refusal.RData")) print(ls())
-
-## Note on Attribution
-
-In general, you should try to provide links to relevant resources, especially those that helped you.
-You don't have to link to every StackOverflow post you used but if there are explainers on aspects
-of the data or specific models that you found helpful, try to link to those. Also, try to link to
-other sources that might support (or refute) your analysis. These can just be regular hyperlinks.
-You don't need a formal citation.
-
-If you are directly quoting from a source, please make that clear. You can show quotes using `>`
-like this
-
-```         
-> To be or not to be.
+```{r, echo=FALSE, message=FALSE, warning= FALSE, results='hide'}
+# Install and load stargazer if not already installed
+if (!require(gtsummary)) install.packages("gtsummary")
+library(gtsummary)
 ```
 
-> To be or not to be.
+```{r, echo=FALSE, message=FALSE, warning= FALSE, results='hide'}
+library(tidyverse)
+library(pROC)
+library(caret)
 
-----------------------------------------------------------------------------------------------------
+iowa_data <- read_csv(here::here("dataset", "Iowa_Probation_Recidivism_Status_20240403.csv"), show_col_types = FALSE)
+iowa_data_clean <- read_csv(here::here("dataset", "iowa-data-clean.csv"), show_col_types = FALSE)
+new_compas <- read_csv(here::here("dataset", "compas-scores-two-years-violent.csv"), show_col_types = FALSE)
+compas_two_years_violent <- read_csv(here::here("dataset", "compas-scores-two-years-violent.csv"), show_col_types = FALSE)
+compas_scores_clean <- read_csv(here::here("dataset", "compas-scores-clean.csv"), show_col_types = FALSE)
+new_compas_clean <- read_csv(here::here("dataset", "new-compas-clean.csv"), show_col_types = FALSE)
+combined_data <-  read_csv(here::here("dataset", "combined-data.csv"), show_col_types = FALSE)
+```
 
-## Rubric: On this page
+```{r Data cleaning for compas_two_years_violent, echo=FALSE, message=FALSE, warning= FALSE, results='hide'}
+# rename decile_score name (weird because of the index)
+colnames(compas_two_years_violent)[which(colnames(compas_two_years_violent) == "decile_score...40")] <- "decile_score"
 
-You will
+# keep only reletive fields
+compas_two_years_violent <- compas_two_years_violent  %>%
+  select(sex, age, race, decile_score, score_text, reincarcerated)
 
--   Introduce what motivates your Data Analysis (DA)
-    -   Which variables and relationships are you most interested in?
-    -   What questions are you interested in answering?
-    -   Provide context for the rest of the page. This will include figures/tables that illustrate
-        aspects of the data of your question.
--   Modeling and Inference
-    -   The page will include some kind of formal statistical model. This could be a linear
-        regression, logistic regression, or another modeling framework.
-    -   Explain the ideas and techniques you used to choose the predictors for your model. (Think
-        about including interaction terms and other transformations of your variables.)
-    -   Describe the results of your modelling and make sure to give a sense of the uncertainty in
-        your estimates and conclusions.
--   Explain the flaws and limitations of your analysis
-    -   Are there some assumptions that you needed to make that might not hold? Is there other data
-        that would help to answer your questions?
--   Clarity Figures
-    -   Are your figures/tables/results easy to read, informative, without problems like
-        overplotting, hard-to-read labels, etc?
-    -   Each figure should provide a key insight. Too many figures or other data summaries can
-        detract from this. (While not a hard limit, around 5 total figures is probably a good
-        target.)
-    -   Default `lm` output and plots are typically not acceptable.
--   Clarity of Explanations
-    -   How well do you explain each figure/result?
-    -   Do you provide interpretations that suggest further analysis or explanations for observed
-        phenomenon?
--   Organization and cleanliness.
-    -   Make sure to remove excessive warnings, hide most or all code, organize with sections or
-        multiple pages, use bullets, etc.
-    -   This page should be self-contained, i.e. provide a description of the relevant data.
+# Delete records with decile_score = -1
+compas_two_years_violent <- compas_two_years_violent %>%
+  filter(decile_score != -1)
+```
 
-----------------------------------------------------------------------------------------------------
+![](images/clipboard-1073431270.png)
 
-***NOTE: Everything above this should be removed before final submission.***
-
-# Investigating the COMPAS Score: Unraveling Recidivism Patterns
+# Disentangling the Factors of Recidivism: A Comprehensive Analysis of Race, Sex, Age, and COMPAS Algorithm's Performance
 
 ## Introduction
 
-In the intricate landscape of criminal justice, the **COMPAS (Correctional Offender Management
-Profiling for Alternative Sanctions)** score stands as a pivotal metric. Judges and law enforcement
-officers rely on it to assess the likelihood of an individual reoffending—essentially predicting
-their propensity to commit future crimes. But behind this seemingly objective tool lies a web of
-complexities, biases, and ethical dilemmas.
+In the intricate landscape of criminal justice, the **COMPAS (Correctional Offender Management Profiling for Alternative Sanctions)** score stands as a pivotal metric.
+Judges and law enforcement officers rely on it to assess the likelihood of an individual reoffending—essentially predicting their propensity to commit future crimes.
+But behind this seemingly objective tool lies a web of complexities, biases, and ethical dilemmas.
 
-Our data analysis endeavors to shed light on the relationship between the COMPAS score and several
-key factors: **ethnic race, sex, and age**. By delving into this trove of information, we aim to
-unravel patterns, expose potential disparities, and contribute to a more informed discourse on
-recidivism.
+The following data analysis endeavors to shed light on the relationship between the COMPAS score and several key factors: **ethnic race, sex, and age**.
+By delving into this trove of information, the analysis aims to unravel patterns, expose potential disparities, and contribute to a more informed discourse on recidivism.
 
 ## The Motivation
 
 1.  **Justice or Prejudice?**\
-    The COMPAS score, while ostensibly neutral, has faced scrutiny for potential racial and gender
-    biases. Are certain demographics disproportionately labeled as high-risk offenders? Our
-    investigation seeks to answer this critical question.
-
-    1.  Distribution of DecileScores by Race
+    The COMPAS score, while ostensibly neutral, has faced scrutiny for potential racial and gender biases.
+    Are certain demographics disproportionately labeled as high-risk offenders?
+    This analysis seeks to answer this critical question.
 
 2.  **Ground Truth vs. Prediction:**\
-    Our dataset not only includes the COMPAS score but also tracks whether individuals have actually
-    reoffended. By comparing these ground truth outcomes with the predicted scores, we can assess
-    the model’s accuracy and uncover any discrepancies.
-
-    1.  ROC
-
-    2.  Effect of Age - Female + Male Combined
-
-    3.  Proportion of Different Races Reoffended in Each State
+    The dataset from ProPublica not only includes the COMPAS score but also tracks whether individuals have actually reoffended.
+    Comparing the ground truth outcomes with the predicted scores allows for an assessment of the model's accuracy and the uncovering of any discrepancies.
 
 ## Modeling and Inference
 
-### Initial Exploration of Collected Data
+### Justice or Prejudice?
 
-```{r}
-library(tidyverse)
+One of the most pressing concerns surrounding the COMPAS score is the potential for bias against certain demographic groups, which could perpetuate systemic discrimination and exacerbate existing disparities within the criminal justice system.
+The analysis uncovered troubling evidence of such biases within the dataset.
 
-compas_scores_clean <- read_csv("dataset/compas-scores-clean.csv", show_col_types = FALSE)
+The distribution of DecileScores, which represent normalized COMPAS scores ranging from 0 (lowest risk) to 10 (highest risk), across racial groups reveals stark disparities.
 
-# Boxplot for RawScore
-boxplot(compas_scores_clean$RawScore, main="Boxplot of Raw Scores", 
-        ylab="Raw Score", xlab="COMPAS Clean Dataset")
-```
-
-The box plot of the Raw Scores shows a wide range in values, suggesting a high level of variability
-among the scores. The median value is slightly above zero, and there is a notable presence of high
-outliers, indicating that some scores are significantly higher than the majority. The spread of
-scores within the interquartile range is large, pointing to a substantial dispersion among the
-middle 50% of data points. In contrast, there are no outliers on the lower side, which suggests that
-the lower scores are more closely packed together without extreme low values.
-
-The skew and outliers in the raw score suggests a less useful information. Thus, Decile Score, a
-normalized COMPAS score divided into 10 scales, with closer to 10 meaning higher COMPAS score, might
-give more insight:
-
-```{r}
-# Boxplot for DecileScore
-boxplot(compas_scores_clean$DecileScore, main="Boxplot of Decile Scores", 
-        ylab="Decile Score", xlab="COMPAS Clean Dataset")
-```
-
-The box plot for the Decile Scores presents a more symmetrical distribution, with a median value
-around the midpoint of the score range. This plot is characterized by a narrower interquartile
-range, indicating less variation among the central half of the scores compared to the Raw Scores.
-The absence of significant outliers in the Decile Score distribution suggests a more uniform scoring
-scale, indicating a methodical categorization into deciles. This normalizing process distribute the
-scores more evenly across a predetermined scale. Thus, focusing on Decile Score might give more
-insight to the overall population's COMPAS score.
-
-### Relationship Between Sex and Decile Score
-
-```{r}
-library(tidyverse)
-library(MASS)
-
-compas_scores_clean <- read_csv("dataset/compas-scores-clean.csv")
-
-model <- polr(as.factor(DecileScore) ~ Sex, data = compas_scores_clean, Hess=TRUE)
-model
-summary(model)
-predictions <- predict(model, compas_scores_clean, type="class")
-ggplot(compas_scores_clean, aes(x=Sex, y=DecileScore)) +
-  geom_boxplot() +
-  labs(title="Distribution of DecileScores by Sex",
-       x="Sex",
-       y="DecileScore") +
-  theme_minimal()
-```
-
-Both Female and Male categories have median scores (indicated by the line inside the box) that are
-approximately at the same level, suggesting that the central tendency of scores is similar across
-both sexes. The range for Males is slightly larger than for Females, which suggests that scores for
-Males are more spread out. There do not appear to be any outliers indicated for either Females or
-Males, suggesting that all the scores fall within a relatively expected range. The male has wider
-IQR than Female’s. Also, both graphs are skewed to the right.
-
-### Relationship Between Race and Decile Score
-
-```{r}
-df <- compas_scores_clean %>% 
-  mutate(AA = if_else(Race == "African-American" | Race == "African-Am", 1, 0))
-
-race_model <- lm(DecileScore ~ AA, data = df)
-summary(race_model)
-predictions <- predict(race_model, df)
-
+```{r, echo=FALSE, message=FALSE, warning= FALSE, results='hide'}
 ggplot(compas_scores_clean, aes(x=Race, y=DecileScore)) +
   geom_boxplot() +
   labs(title="Distribution of DecileScores by Race",
        x="Race",
        y="DecileScore") +
   theme_minimal() +
-  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+  theme(axis.text.x = element_text(angle = 45))
 ```
 
-To explore the relationship between race and decile scores, we decided to use linear regression
-analysis. The results of the regression model revealed a statistically significant correlation where
-being classified as African-American was associated with an increase in the decile score by
-approximately 1.3 points. However, the model’s adjusted R-squared value was 0.06062, indicating that
-race accounts for only about 6% of the variation in decile scores, suggesting other factors also
-play a significant role. The accompanying boxplot clearly illustrates higher median scores for
-African-Americans, indicating a potential systemic trend that would be worth investigating further.
+As this figure illustrates, African-Americans tend to have significantly higher median decile scores compared to other races like Caucasian or Asian.
+In addition, African-American is one of the only 2 minority group that does NOT have the highest score (10) as the outlier, with the other one being Native American.
 
-```{r}
-combined_data <-  read_csv(here::here("dataset", "combined-data.csv"), show_col_types = FALSE)
+This distribution raises grave concerns about the fairness and equity of the COMPAS algorithm.
+If individuals from particular racial backgrounds are systematically labeled as higher-risk offenders, it could lead to harsher sentencing decisions, increased rates of incarceration, and a perpetuation of the vicious cycle of marginalization and recidivism.
 
-ggplot(combined_data, aes(x = age)) + geom_histogram(binwidth = 5, fill = "blue", color = "black") +
-  ggtitle("Age Distribution") + xlab("Age") + ylab("Frequency")
+Further examination of the reincarceration rates by sex and race raises additional concerns about the fairness and accuracy of the COMPAS algorithm.
+The analysis revealed that the majority of individuals, regardless of their demographic characteristics, did not reoffend or become reincarcerated.
+
+```{r, echo=FALSE, message=FALSE, warning= FALSE, results='hide'}
 ggplot(combined_data, aes(x = sex, fill = reincarcerated)) + geom_bar(position = "fill") +
   ggtitle("Reincarceration Rate by Sex") + ylab("Proportion")
 ggplot(combined_data, aes(x = race, fill = reincarcerated)) + geom_bar(position = "fill") +
   ggtitle("Reincarceration Rate by Race") + ylab("Proportion") + theme(axis.text.x = element_text(angle = 45, hjust = 1))
+```
 
-chisq.test(table(combined_data$sex, combined_data$reincarcerated))
-chisq.test(table(combined_data$race, combined_data$reincarcerated))
+This finding calls into question the validity of assigning high-risk scores to a substantial portion of the population, as it may lead to undue consequences and perpetuate cycles of marginalization.
+Specifically, for [**only the violent cases**]{.underline} in the Florida dataset, individuals labeled as "high" risk by the COMPAS algorithm (decile scores of 8-10) had a reoffense rate of only 46.69%.
+Meanwhile, those classified as "medium" risk (decile scores of 5-7) had a reoffense rate of 27.23%.
+These figures raise concerns about the high-risk threshold set by the COMPAS tool, as a 46.69% reoffense rate for the "high" risk group may not justify the potential consequences associated with such a label, particularly when considering the low overall reincarceration rates observed in our data.
 
+```{r, echo=FALSE, message=FALSE, warning= FALSE, results='hide'}
+reoffense_rates <- compas_two_years_violent %>%
+  group_by(score_text) %>%
+  summarize(reoffense_rate = mean(reincarcerated))
+
+# Print the result
+print(reoffense_rates)
+```
+
+The concerning disparities shown in the distribution of COMPAS scores naturally raise questions about the validity and accuracy of the algorithm's risk predictions.
+While the disproportionately higher risk assignments for certain minority groups are undoubtedly problematic from a fairness perspective, an equally crucial inquiry is whether these scores align with **actual recidivism outcomes**.
+Do the COMPAS scores effectively capture the ground truth of an individual's likelihood of reoffending, or are they plagued by systematic biases that perpetuate existing prejudices?
+To address this critical question, the analysis turns to a direct comparison between the COMPAS risk predictions and the observed reoffending rates across different racial groups.
+
+### Ground Truth vs. Prediction
+
+To further assess the COMPAS algorithm's performance and potential biases, a predictive model was developed using the combined data from both Florida and Iowa.
+The approach involved building a logistic regression model that predicted the binary outcome of reincarceration based on predictor variables such as sex, age, race, and state.
+The model was trained by setting the reference levels for categorical variables (sex, race, and state) to the categories with the most data points (Male, White, and Iowa, respectively).
+
+The model's performance was evaluated using the ROC (Receiver Operating Characteristic) curve, as shown in the image.
+The area under the curve (AUC) of 0.6106 indicates a moderate level of predictive performance, albeit with room for improvement.
+
+```{r, echo=FALSE, message=FALSE, warning= FALSE, results='hide'}
 combined_data$sex <- factor(combined_data$sex)
 combined_data$sex <- relevel(combined_data$sex, ref = "Male")
 combined_data$race <- factor(combined_data$race)
@@ -244,82 +136,57 @@ combined_data$race <- relevel(combined_data$race, ref = "White")
 combined_data$state <- factor(combined_data$state)
 combined_data$state <- relevel(combined_data$state, ref = "Iowa")
 model <- glm(reincarcerated ~ sex + age + race + state, data = combined_data, family = "binomial")
-summary(model)
 
-#Effect of Age on Probability of Reincarceration by Race
-#Male
-model_without_state <- glm(reincarcerated ~ sex + age + race, family = "binomial", data = combined_data)
-min_age <- min(combined_data$age, na.rm = TRUE)
-max_age <- max(combined_data$age, na.rm = TRUE)
-new_data <- expand.grid(
-  sex = factor("Male", levels = levels(combined_data$sex)),
-  age = seq(min_age, max_age, length.out = 100),
-  race = levels(combined_data$race)
-)
-
-new_data$probability <- predict(model_without_state, newdata = new_data, type = "response")
-
-ggplot(new_data, aes(x = age, y = probability, color = race)) +
-  geom_line() +
-  labs(title = "Effect of Age on Probability of Reincarceration by Race_Males",
-       x = "Age",
-       y = "Probability of Reincarceration") +
-  scale_color_brewer(palette = "Set1") +
-  theme_minimal()
-#Female
-min_age <- min(combined_data$age, na.rm = TRUE)
-max_age <- max(combined_data$age, na.rm = TRUE)
-new_data <- expand.grid(
-  sex = factor("Female", levels = levels(combined_data$sex)),
-  age = seq(min_age, max_age, length.out = 100),
-  race = levels(combined_data$race)
-)
-
-new_data$probability <- predict(model_without_state, newdata = new_data, type = "response")
-
-ggplot(new_data, aes(x = age, y = probability, color = race)) +
-  geom_line() +
-  labs(title = "Effect of Age on Probability of Reincarceration by Race_Females",
-       x = "Age",
-       y = "Probability of Reincarceration") +
-  scale_color_brewer(palette = "Set1") +
-  theme_minimal()
-
-#Probability of Reincarceration by Race
-#Male
-new_data <- data.frame(
-  sex = factor("Male", levels = levels(combined_data$sex)),
-  age = mean(combined_data$age, na.rm = TRUE),
-  race = levels(combined_data$race)
-)
-
-new_data$probability <- predict(model_without_state, newdata = new_data, type = "response")
-
-ggplot(new_data, aes(x = race, y = probability, fill = race)) +
-  geom_col() +
-  labs(title = "Probability of Reincarceration by Race_Male",
-       x = "Race",
-       y = "Probability of Reincarceration") +
-  theme_minimal()+
-  theme(axis.text.x = element_text(angle = 90, hjust = 1)) 
-#Female
-new_data <- data.frame(
-  sex = factor("Female", levels = levels(combined_data$sex)),
-  age = mean(combined_data$age, na.rm = TRUE),
-  race = levels(combined_data$race)
-)
-
-new_data$probability <- predict(model_without_state, newdata = new_data, type = "response")
-
-ggplot(new_data, aes(x = race, y = probability, fill = race)) +
-  geom_col() +
-  labs(title = "Probability of Reincarceration by Race_Female",
-       x = "Race",
-       y = "Probability of Reincarceration") +
-  theme_minimal()+
-  theme(axis.text.x = element_text(angle = 90, hjust = 1)) 
+predicted_probabilities <- predict(model, newdata = combined_data, type = "response")
+roc_curve <- roc(response = combined_data$reincarcerated, predictor = predicted_probabilities)
+plot(roc_curve, main = "ROC Curve")
+auc(roc_curve)
 ```
 
-## Flaws and Limitations
+To better understand the model's predictions, the coefficients for each predictor variable were examined.
+According to the model, factors such as being American Indian or Alaska Native, Black, or from the state of Florida were associated with higher probabilities of reincarceration compared to the respective reference categories (White and Iowa).
 
--   Limitation on Data Source
+```{r, echo=FALSE, message=FALSE, warning= FALSE}
+# Generate the summary table
+model_summary <- model %>%
+  tbl_regression() %>%
+  add_global_p() %>%
+  bold_labels() %>%
+  italicize_levels()
+
+# Print the summary table
+model_summary
+```
+
+It's important to note that these findings contrast with the racial biases observed in the COMPAS scores.
+While the COMPAS scores exhibited a clear bias against African-Americans, the model and the ground truth data both suggested that American Indian or Alaska Native individuals had the highest likelihood of reoffending, followed by African-Americans.
+This highlights the divergent patterns of bias present in the COMPAS algorithm compared to the observed recidivism rates in the analysis.
+
+Furthermore, examination of the proportion of different races that reoffended in each state revealed that Black individuals were not the most likely to reoffend in either Florida or Iowa.
+
+```{r, echo=FALSE, message=FALSE, warning= FALSE, results='hide'}
+proportion_data <- combined_data %>%
+  group_by(state, race) %>%
+  summarise(Reoffence_Proportion = mean(reincarcerated, na.rm = TRUE)) %>%
+  ungroup()
+
+# Plot the proportions
+ggplot(proportion_data, aes(x = race, y = Reoffence_Proportion, fill = race)) +
+  geom_bar(stat = "identity", position = position_dodge()) +
+  facet_wrap(~ state) +
+  labs(title = "Proportion of Different Races Reoffended in Each State",
+       x = "Race",
+       y = "Proportion of Reoffence") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 30, hjust = 1)) 
+```
+
+These results underscore the importance of critically evaluating and calibrating risk assessment tools like COMPAS to ensure that they accurately reflect real-world patterns and do not perpetuate or amplify existing biases against certain racial or ethnic groups.
+The findings highlight the complex interplay of factors that influence recidivism rates and the potential for data-driven models to exhibit biases or inaccuracies if not carefully constructed and validated.
+While the model captures some underlying patterns, it is crucial to acknowledge that historical data on recidivism rates should not be blindly extrapolated to make sweeping generalizations about entire racial or ethnic groups.
+Just because certain groups may have higher observed reoffending rates in the past does not justify assigning elevated risk scores or harsher sentences to all individuals from those backgrounds.
+Such an approach would only perpetuate cycles of systemic discrimination and undermine the principles of equal justice under the law.
+
+The analysis underscores the need for a more nuanced and individualized approach to risk assessment, one that accounts for the multitude of factors that influence an individual's likelihood of reoffending.
+While data-driven models can provide valuable insights, they must be carefully calibrated, validated, and complemented with human judgment and a deep understanding of the underlying societal dynamics at play.
+Furthermore, ongoing efforts to address systemic biases, improve data quality, and explore alternative modeling approaches are crucial for developing more equitable and effective risk assessment tools.
