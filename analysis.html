@@ -21,40 +21,6 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-/* CSS for syntax highlighting */
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-}
 </style>
 
 
@@ -148,20 +114,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#example-of-loading-data" id="toc-example-of-loading-data" class="nav-link active" data-scroll-target="#example-of-loading-data">Example of loading data</a></li>
-  <li><a href="#note-on-attribution" id="toc-note-on-attribution" class="nav-link" data-scroll-target="#note-on-attribution">Note on Attribution</a></li>
-  <li><a href="#rubric-on-this-page" id="toc-rubric-on-this-page" class="nav-link" data-scroll-target="#rubric-on-this-page">Rubric: On this page</a></li>
-  <li><a href="#investigating-the-compas-score-unraveling-recidivism-patterns" id="toc-investigating-the-compas-score-unraveling-recidivism-patterns" class="nav-link" data-scroll-target="#investigating-the-compas-score-unraveling-recidivism-patterns">Investigating the COMPAS Score: Unraveling Recidivism Patterns</a>
+  <li><a href="#disentangling-the-factors-of-recidivism-a-comprehensive-analysis-of-race-sex-age-and-compas-algorithms-performance" id="toc-disentangling-the-factors-of-recidivism-a-comprehensive-analysis-of-race-sex-age-and-compas-algorithms-performance" class="nav-link active" data-scroll-target="#disentangling-the-factors-of-recidivism-a-comprehensive-analysis-of-race-sex-age-and-compas-algorithms-performance">Disentangling the Factors of Recidivism: A Comprehensive Analysis of Race, Sex, Age, and COMPAS Algorithm’s Performance</a>
   <ul class="collapse">
   <li><a href="#introduction" id="toc-introduction" class="nav-link" data-scroll-target="#introduction">Introduction</a></li>
   <li><a href="#the-motivation" id="toc-the-motivation" class="nav-link" data-scroll-target="#the-motivation">The Motivation</a></li>
   <li><a href="#modeling-and-inference" id="toc-modeling-and-inference" class="nav-link" data-scroll-target="#modeling-and-inference">Modeling and Inference</a>
   <ul class="collapse">
-  <li><a href="#initial-exploration-of-collected-data" id="toc-initial-exploration-of-collected-data" class="nav-link" data-scroll-target="#initial-exploration-of-collected-data">Initial Exploration of Collected Data</a></li>
-  <li><a href="#relationship-between-sex-and-decile-score" id="toc-relationship-between-sex-and-decile-score" class="nav-link" data-scroll-target="#relationship-between-sex-and-decile-score">Relationship Between Sex and Decile Score</a></li>
-  <li><a href="#relationship-between-race-and-decile-score" id="toc-relationship-between-race-and-decile-score" class="nav-link" data-scroll-target="#relationship-between-race-and-decile-score">Relationship Between Race and Decile Score</a></li>
+  <li><a href="#justice-or-prejudice" id="toc-justice-or-prejudice" class="nav-link" data-scroll-target="#justice-or-prejudice">Justice or Prejudice?</a></li>
+  <li><a href="#ground-truth-vs.-prediction" id="toc-ground-truth-vs.-prediction" class="nav-link" data-scroll-target="#ground-truth-vs.-prediction">Ground Truth vs.&nbsp;Prediction</a></li>
   </ul></li>
-  <li><a href="#flaws-and-limitations" id="toc-flaws-and-limitations" class="nav-link" data-scroll-target="#flaws-and-limitations">Flaws and Limitations</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -191,425 +152,594 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 </header>
 
-<p><img src="https://upload.wikimedia.org/wikipedia/commons/7/77/Pebbleswithquarzite.jpg" class="img-fluid"></p>
-<p>This comes from the file <code>analysis.qmd</code>.</p>
-<p>We describe here our detailed data analysis. This page will provide an overview of what questions you addressed, illustrations of relevant aspects of the data with tables and figures, and a statistical model that attempts to answer part of the question. You’ll also reflect on next steps and further analysis.</p>
-<p>The audience for this page is someone like your class mates, so you can expect that they have some level of statistical and quantitative sophistication and understand ideas like linear and logistic regression, coefficients, confidence intervals, overfitting, etc.</p>
-<p>While the exact number of figures and tables will vary and depend on your analysis, you should target around 5 to 6. An overly long analysis could lead to losing points. If you want you can link back to your blog posts or create separate pages with more details.</p>
-<p>The style of this paper should aim to be that of an academic paper. I don’t expect this to be of publication quality but you should keep that aim in mind. Avoid using “we” too frequently, for example “We also found that …”. Describe your methodology and your findings but don’t describe your whole process.</p>
-<section id="example-of-loading-data" class="level3">
-<h3 class="anchored" data-anchor-id="example-of-loading-data">Example of loading data</h3>
-<p>The code below shows an example of loading the loan refusal data set (which you should delete at some point).</p>
-<p>library(tidyverse) print(getwd()) data &lt;- read_csv(here::here(“dataset/loan_refusal_clean.csv”)) load(here::here(“dataset/loan_refusal.RData”)) print(ls())</p>
-</section>
-<section id="note-on-attribution" class="level2">
-<h2 class="anchored" data-anchor-id="note-on-attribution">Note on Attribution</h2>
-<p>In general, you should try to provide links to relevant resources, especially those that helped you. You don’t have to link to every StackOverflow post you used but if there are explainers on aspects of the data or specific models that you found helpful, try to link to those. Also, try to link to other sources that might support (or refute) your analysis. These can just be regular hyperlinks. You don’t need a formal citation.</p>
-<p>If you are directly quoting from a source, please make that clear. You can show quotes using <code>&gt;</code> like this</p>
-<pre><code>&gt; To be or not to be.</code></pre>
-<blockquote class="blockquote">
-<p>To be or not to be.</p>
-</blockquote>
-<hr>
-</section>
-<section id="rubric-on-this-page" class="level2">
-<h2 class="anchored" data-anchor-id="rubric-on-this-page">Rubric: On this page</h2>
-<p>You will</p>
-<ul>
-<li>Introduce what motivates your Data Analysis (DA)
-<ul>
-<li>Which variables and relationships are you most interested in?</li>
-<li>What questions are you interested in answering?</li>
-<li>Provide context for the rest of the page. This will include figures/tables that illustrate aspects of the data of your question.</li>
-</ul></li>
-<li>Modeling and Inference
-<ul>
-<li>The page will include some kind of formal statistical model. This could be a linear regression, logistic regression, or another modeling framework.</li>
-<li>Explain the ideas and techniques you used to choose the predictors for your model. (Think about including interaction terms and other transformations of your variables.)</li>
-<li>Describe the results of your modelling and make sure to give a sense of the uncertainty in your estimates and conclusions.</li>
-</ul></li>
-<li>Explain the flaws and limitations of your analysis
-<ul>
-<li>Are there some assumptions that you needed to make that might not hold? Is there other data that would help to answer your questions?</li>
-</ul></li>
-<li>Clarity Figures
-<ul>
-<li>Are your figures/tables/results easy to read, informative, without problems like overplotting, hard-to-read labels, etc?</li>
-<li>Each figure should provide a key insight. Too many figures or other data summaries can detract from this. (While not a hard limit, around 5 total figures is probably a good target.)</li>
-<li>Default <code>lm</code> output and plots are typically not acceptable.</li>
-</ul></li>
-<li>Clarity of Explanations
-<ul>
-<li>How well do you explain each figure/result?</li>
-<li>Do you provide interpretations that suggest further analysis or explanations for observed phenomenon?</li>
-</ul></li>
-<li>Organization and cleanliness.
-<ul>
-<li>Make sure to remove excessive warnings, hide most or all code, organize with sections or multiple pages, use bullets, etc.</li>
-<li>This page should be self-contained, i.e.&nbsp;provide a description of the relevant data.</li>
-</ul></li>
-</ul>
-<hr>
-<p><strong><em>NOTE: Everything above this should be removed before final submission.</em></strong></p>
-</section>
-<section id="investigating-the-compas-score-unraveling-recidivism-patterns" class="level1">
-<h1>Investigating the COMPAS Score: Unraveling Recidivism Patterns</h1>
+<p><img src="images/clipboard-1073431270.png" class="img-fluid"></p>
+<section id="disentangling-the-factors-of-recidivism-a-comprehensive-analysis-of-race-sex-age-and-compas-algorithms-performance" class="level1">
+<h1>Disentangling the Factors of Recidivism: A Comprehensive Analysis of Race, Sex, Age, and COMPAS Algorithm’s Performance</h1>
 <section id="introduction" class="level2">
 <h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
 <p>In the intricate landscape of criminal justice, the <strong>COMPAS (Correctional Offender Management Profiling for Alternative Sanctions)</strong> score stands as a pivotal metric. Judges and law enforcement officers rely on it to assess the likelihood of an individual reoffending—essentially predicting their propensity to commit future crimes. But behind this seemingly objective tool lies a web of complexities, biases, and ethical dilemmas.</p>
-<p>Our data analysis endeavors to shed light on the relationship between the COMPAS score and several key factors: <strong>ethnic race, sex, and age</strong>. By delving into this trove of information, we aim to unravel patterns, expose potential disparities, and contribute to a more informed discourse on recidivism.</p>
+<p>The following data analysis endeavors to shed light on the relationship between the COMPAS score and several key factors: <strong>ethnic race, sex, and age</strong>. By delving into this trove of information, the analysis aims to unravel patterns, expose potential disparities, and contribute to a more informed discourse on recidivism.</p>
 </section>
 <section id="the-motivation" class="level2">
 <h2 class="anchored" data-anchor-id="the-motivation">The Motivation</h2>
 <ol type="1">
 <li><p><strong>Justice or Prejudice?</strong><br>
-The COMPAS score, while ostensibly neutral, has faced scrutiny for potential racial and gender biases. Are certain demographics disproportionately labeled as high-risk offenders? Our investigation seeks to answer this critical question.</p></li>
-<li><p><strong>Age and Recidivism:</strong><br>
-Does age play a role in the likelihood of reoffending? We explore whether the COMPAS score treats youthful offenders differently from their older counterparts.</p></li>
+The COMPAS score, while ostensibly neutral, has faced scrutiny for potential racial and gender biases. Are certain demographics disproportionately labeled as high-risk offenders? This analysis seeks to answer this critical question.</p></li>
 <li><p><strong>Ground Truth vs.&nbsp;Prediction:</strong><br>
-Our dataset not only includes the COMPAS score but also tracks whether individuals have actually reoffended. By comparing these ground truth outcomes with the predicted scores, we can assess the model’s accuracy and uncover any discrepancies.</p></li>
+The dataset from ProPublica not only includes the COMPAS score but also tracks whether individuals have actually reoffended. Comparing the ground truth outcomes with the predicted scores allows for an assessment of the model’s accuracy and the uncovering of any discrepancies.</p></li>
 </ol>
 </section>
 <section id="modeling-and-inference" class="level2">
 <h2 class="anchored" data-anchor-id="modeling-and-inference">Modeling and Inference</h2>
-<section id="initial-exploration-of-collected-data" class="level3">
-<h3 class="anchored" data-anchor-id="initial-exploration-of-collected-data">Initial Exploration of Collected Data</h3>
+<section id="justice-or-prejudice" class="level3">
+<h3 class="anchored" data-anchor-id="justice-or-prejudice">Justice or Prejudice?</h3>
+<p>One of the most pressing concerns surrounding the COMPAS score is the potential for bias against certain demographic groups, which could perpetuate systemic discrimination and exacerbate existing disparities within the criminal justice system. The analysis uncovered troubling evidence of such biases within the dataset.</p>
+<p>The distribution of DecileScores, which represent normalized COMPAS scores ranging from 0 (lowest risk) to 10 (highest risk), across racial groups reveals stark disparities.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
-✔ dplyr     1.1.4     ✔ readr     2.1.5
-✔ forcats   1.0.0     ✔ stringr   1.5.1
-✔ ggplot2   3.4.4     ✔ tibble    3.2.1
-✔ lubridate 1.9.3     ✔ tidyr     1.3.0
-✔ purrr     1.0.2     
-── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
-✖ dplyr::filter() masks stats::filter()
-✖ dplyr::lag()    masks stats::lag()
-ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>compas_scores_clean <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"dataset/compas-scores-clean.csv"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Boxplot for RawScore</span></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(compas_scores_clean<span class="sc">$</span>RawScore, <span class="at">main=</span><span class="st">"Boxplot of Raw Scores"</span>, </span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>        <span class="at">ylab=</span><span class="st">"Raw Score"</span>, <span class="at">xlab=</span><span class="st">"COMPAS Clean Dataset"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<p><img src="analysis_files/figure-html/unnamed-chunk-1-1.png" class="img-fluid" width="672"></p>
-</div>
-</div>
-<p>The box plot of the Raw Scores shows a wide range in values, suggesting a high level of variability among the scores. The median value is slightly above zero, and there is a notable presence of high outliers, indicating that some scores are significantly higher than the majority. The spread of scores within the interquartile range is large, pointing to a substantial dispersion among the middle 50% of data points. In contrast, there are no outliers on the lower side, which suggests that the lower scores are more closely packed together without extreme low values.</p>
-<p>The skew and outliers in the raw score suggests a less useful information. Thus, Decile Score, a normalized COMPAS score divided into 10 scales, with closer to 10 meaning higher COMPAS score, might give more insight:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Boxplot for DecileScore</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(compas_scores_clean<span class="sc">$</span>DecileScore, <span class="at">main=</span><span class="st">"Boxplot of Decile Scores"</span>, </span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>        <span class="at">ylab=</span><span class="st">"Decile Score"</span>, <span class="at">xlab=</span><span class="st">"COMPAS Clean Dataset"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<p><img src="analysis_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid" width="672"></p>
-</div>
-</div>
-<p>The box plot for the Decile Scores presents a more symmetrical distribution, with a median value around the midpoint of the score range. This plot is characterized by a narrower interquartile range, indicating less variation among the central half of the scores compared to the Raw Scores. The absence of significant outliers in the Decile Score distribution suggests a more uniform scoring scale, indicating a methodical categorization into deciles. This normalizing process distribute the scores more evenly across a predetermined scale. Thus, focusing on Decile Score might give more insight to the overall population’s COMPAS score.</p>
-</section>
-<section id="relationship-between-sex-and-decile-score" class="level3">
-<h3 class="anchored" data-anchor-id="relationship-between-sex-and-decile-score">Relationship Between Sex and Decile Score</h3>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(MASS)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>
-Attaching package: 'MASS'</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>The following object is masked from 'package:dplyr':
-
-    select</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>compas_scores_clean <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"dataset/compas-scores-clean.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Rows: 60843 Columns: 8</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>── Column specification ────────────────────────────────────────────────────────
-Delimiter: ","
-chr  (3): Sex, Race, ScoreText
-dbl  (4): Person_ID, Age, RawScore, DecileScore
-date (1): DateOfBirth
-
-ℹ Use `spec()` to retrieve the full column specification for this data.
-ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="fu">polr</span>(<span class="fu">as.factor</span>(DecileScore) <span class="sc">~</span> Sex, <span class="at">data =</span> compas_scores_clean, <span class="at">Hess=</span><span class="cn">TRUE</span>)</span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>model</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Call:
-polr(formula = as.factor(DecileScore) ~ Sex, data = compas_scores_clean, 
-    Hess = TRUE)
-
-Coefficients:
-  SexMale 
-0.2398502 
-
-Intercepts:
-        -1|1          1|2          2|3          3|4          4|5          5|6 
--7.026391496 -0.642503205  0.006575047  0.570739527  0.953044932  1.351940665 
-         6|7          7|8          8|9         9|10 
- 1.796170065  2.259116253  2.838405220  3.778964772 
-
-Residual Deviance: 249899.29 
-AIC: 249921.29 </code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Call:
-polr(formula = as.factor(DecileScore) ~ Sex, data = compas_scores_clean, 
-    Hess = TRUE)
-
-Coefficients:
-         Value Std. Error t value
-SexMale 0.2399    0.01725    13.9
-
-Intercepts:
-     Value    Std. Error t value 
--1|1  -7.0264   0.1497   -46.9228
-1|2   -0.6425   0.0159   -40.3333
-2|3    0.0066   0.0157     0.4198
-3|4    0.5707   0.0158    36.1351
-4|5    0.9530   0.0161    59.2291
-5|6    1.3519   0.0166    81.3858
-6|7    1.7962   0.0175   102.7372
-7|8    2.2591   0.0188   119.9679
-8|9    2.8384   0.0214   132.7291
-9|10   3.7790   0.0286   131.9669
-
-Residual Deviance: 249899.29 
-AIC: 249921.29 </code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>predictions <span class="ot">&lt;-</span> <span class="fu">predict</span>(model, compas_scores_clean, <span class="at">type=</span><span class="st">"class"</span>)</span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(compas_scores_clean, <span class="fu">aes</span>(<span class="at">x=</span>Sex, <span class="at">y=</span>DecileScore)) <span class="sc">+</span></span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title=</span><span class="st">"Distribution of DecileScores by Sex"</span>,</span>
-<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>       <span class="at">x=</span><span class="st">"Sex"</span>,</span>
-<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">y=</span><span class="st">"DecileScore"</span>) <span class="sc">+</span></span>
-<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="analysis_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
-<p>Both Female and Male categories have median scores (indicated by the line inside the box) that are approximately at the same level, suggesting that the central tendency of scores is similar across both sexes. The range for Males is slightly larger than for Females, which suggests that scores for Males are more spread out. There do not appear to be any outliers indicated for either Females or Males, suggesting that all the scores fall within a relatively expected range. The male has wider IQR than Female’s. Also, both graphs are skewed to the right.</p>
-</section>
-<section id="relationship-between-race-and-decile-score" class="level3">
-<h3 class="anchored" data-anchor-id="relationship-between-race-and-decile-score">Relationship Between Race and Decile Score</h3>
+<p>As this figure illustrates, African-Americans tend to have significantly higher median decile scores compared to other races like Caucasian or Asian. In addition, African-American is one of the only 2 minority group that does NOT have the highest score (10) as the outlier, with the other one being Native American.</p>
+<p>This distribution raises grave concerns about the fairness and equity of the COMPAS algorithm. If individuals from particular racial backgrounds are systematically labeled as higher-risk offenders, it could lead to harsher sentencing decisions, increased rates of incarceration, and a perpetuation of the vicious cycle of marginalization and recidivism.</p>
+<p>Further examination of the reincarceration rates by sex and race raises additional concerns about the fairness and accuracy of the COMPAS algorithm. The analysis revealed that the majority of individuals, regardless of their demographic characteristics, did not reoffend or become reincarcerated.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> compas_scores_clean <span class="sc">%&gt;%</span> </span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">AA =</span> <span class="fu">if_else</span>(Race <span class="sc">==</span> <span class="st">"African-American"</span> <span class="sc">|</span> Race <span class="sc">==</span> <span class="st">"African-Am"</span>, <span class="dv">1</span>, <span class="dv">0</span>))</span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>race_model <span class="ot">&lt;-</span> <span class="fu">lm</span>(DecileScore <span class="sc">~</span> AA, <span class="at">data =</span> df)</span>
-<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(race_model)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>
-Call:
-lm(formula = DecileScore ~ AA, data = df)
-
-Residuals:
-    Min      1Q  Median      3Q     Max 
--5.2918 -1.9946 -0.9946  1.7082  7.0054 
-
-Coefficients:
-            Estimate Std. Error t value Pr(&gt;|t|)    
-(Intercept)  2.99458    0.01381  216.90   &lt;2e-16 ***
-AA           1.29719    0.02070   62.67   &lt;2e-16 ***
----
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-
-Residual standard error: 2.537 on 60841 degrees of freedom
-Multiple R-squared:  0.06064,   Adjusted R-squared:  0.06062 
-F-statistic:  3928 on 1 and 60841 DF,  p-value: &lt; 2.2e-16</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>predictions <span class="ot">&lt;-</span> <span class="fu">predict</span>(race_model, df)</span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(compas_scores_clean, <span class="fu">aes</span>(<span class="at">x=</span>Race, <span class="at">y=</span>DecileScore)) <span class="sc">+</span></span>
-<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
-<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title=</span><span class="st">"Distribution of DecileScores by Race"</span>,</span>
-<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">x=</span><span class="st">"Race"</span>,</span>
-<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>       <span class="at">y=</span><span class="st">"DecileScore"</span>) <span class="sc">+</span></span>
-<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
-<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">45</span>, <span class="at">hjust =</span> <span class="dv">1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="analysis_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid" width="672"></p>
 </div>
+<div class="cell-output-display">
+<p><img src="analysis_files/figure-html/unnamed-chunk-4-2.png" class="img-fluid" width="672"></p>
 </div>
-<p>To explore the relationship between race and decile scores, we decided to use linear regression analysis. The results of the regression model revealed a statistically significant correlation where being classified as African-American was associated with an increase in the decile score by approximately 1.3 points. However, the model’s adjusted R-squared value was 0.06062, indicating that race accounts for only about 6% of the variation in decile scores, suggesting other factors also play a significant role. The accompanying boxplot clearly illustrates higher median scores for African-Americans, indicating a potential systemic trend that would be worth investigating further.</p>
+</div>
+<p>This finding calls into question the validity of assigning high-risk scores to a substantial portion of the population, as it may lead to undue consequences and perpetuate cycles of marginalization. Specifically, for <u><strong>only the violent cases</strong></u> in the Florida dataset, individuals labeled as “high” risk by the COMPAS algorithm (decile scores of 8-10) had a reoffense rate of only 46.69%. Meanwhile, those classified as “medium” risk (decile scores of 5-7) had a reoffense rate of 27.23%. These figures raise concerns about the high-risk threshold set by the COMPAS tool, as a 46.69% reoffense rate for the “high” risk group may not justify the potential consequences associated with such a label, particularly when considering the low overall reincarceration rates observed in our data.</p>
+<p>The concerning disparities shown in the distribution of COMPAS scores naturally raise questions about the validity and accuracy of the algorithm’s risk predictions. While the disproportionately higher risk assignments for certain minority groups are undoubtedly problematic from a fairness perspective, an equally crucial inquiry is whether these scores align with <strong>actual recidivism outcomes</strong>. Do the COMPAS scores effectively capture the ground truth of an individual’s likelihood of reoffending, or are they plagued by systematic biases that perpetuate existing prejudices? To address this critical question, the analysis turns to a direct comparison between the COMPAS risk predictions and the observed reoffending rates across different racial groups.</p>
+</section>
+<section id="ground-truth-vs.-prediction" class="level3">
+<h3 class="anchored" data-anchor-id="ground-truth-vs.-prediction">Ground Truth vs.&nbsp;Prediction</h3>
+<p>To further assess the COMPAS algorithm’s performance and potential biases, a predictive model was developed using the combined data from both Florida and Iowa. The approach involved building a logistic regression model that predicted the binary outcome of reincarceration based on predictor variables such as sex, age, race, and state. The model was trained by setting the reference levels for categorical variables (sex, race, and state) to the categories with the most data points (Male, White, and Iowa, respectively).</p>
+<p>The model’s performance was evaluated using the ROC (Receiver Operating Characteristic) curve, as shown in the image. The area under the curve (AUC) of 0.6106 indicates a moderate level of predictive performance, albeit with room for improvement.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>combined_data <span class="ot">&lt;-</span>  <span class="fu">read_csv</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"dataset"</span>, <span class="st">"combined-data.csv"</span>), <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(combined_data, <span class="fu">aes</span>(<span class="at">x =</span> age)) <span class="sc">+</span> <span class="fu">geom_histogram</span>(<span class="at">binwidth =</span> <span class="dv">5</span>, <span class="at">fill =</span> <span class="st">"blue"</span>, <span class="at">color =</span> <span class="st">"black"</span>) <span class="sc">+</span></span>
-<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Age Distribution"</span>) <span class="sc">+</span> <span class="fu">xlab</span>(<span class="st">"Age"</span>) <span class="sc">+</span> <span class="fu">ylab</span>(<span class="st">"Frequency"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: Removed 1 rows containing non-finite values (`stat_bin()`).</code></pre>
-</div>
 <div class="cell-output-display">
-<p><img src="analysis_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid" width="672"></p>
+<p><img src="analysis_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid" width="672"></p>
 </div>
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(combined_data, <span class="fu">aes</span>(<span class="at">x =</span> sex, <span class="at">fill =</span> reincarcerated)) <span class="sc">+</span> <span class="fu">geom_bar</span>(<span class="at">position =</span> <span class="st">"fill"</span>) <span class="sc">+</span></span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Reincarceration Rate by Sex"</span>) <span class="sc">+</span> <span class="fu">ylab</span>(<span class="st">"Proportion"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>To better understand the model’s predictions, the coefficients for each predictor variable were examined. According to the model, factors such as being American Indian or Alaska Native, Black, or from the state of Florida were associated with higher probabilities of reincarceration compared to the respective reference categories (White and Iowa).</p>
+<div class="cell">
 <div class="cell-output-display">
-<p><img src="analysis_files/figure-html/unnamed-chunk-5-2.png" class="img-fluid" width="672"></p>
-</div>
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(combined_data, <span class="fu">aes</span>(<span class="at">x =</span> race, <span class="at">fill =</span> reincarcerated)) <span class="sc">+</span> <span class="fu">geom_bar</span>(<span class="at">position =</span> <span class="st">"fill"</span>) <span class="sc">+</span></span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Reincarceration Rate by Race"</span>) <span class="sc">+</span> <span class="fu">ylab</span>(<span class="st">"Proportion"</span>) <span class="sc">+</span> <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">45</span>, <span class="at">hjust =</span> <span class="dv">1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<p><img src="analysis_files/figure-html/unnamed-chunk-5-3.png" class="img-fluid" width="672"></p>
-</div>
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">chisq.test</span>(<span class="fu">table</span>(combined_data<span class="sc">$</span>sex, combined_data<span class="sc">$</span>reincarcerated))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in chisq.test(table(combined_data$sex, combined_data$reincarcerated)):
-Chi-squared approximation may be incorrect</code></pre>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>
-    Pearson's Chi-squared test
 
-data:  table(combined_data$sex, combined_data$reincarcerated)
-X-squared = 631.99, df = 2, p-value &lt; 2.2e-16</code></pre>
+<div id="ovyumzbzzg" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#ovyumzbzzg table {
+  font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#ovyumzbzzg thead, #ovyumzbzzg tbody, #ovyumzbzzg tfoot, #ovyumzbzzg tr, #ovyumzbzzg td, #ovyumzbzzg th {
+  border-style: none;
+}
+
+#ovyumzbzzg p {
+  margin: 0;
+  padding: 0;
+}
+
+#ovyumzbzzg .gt_table {
+  display: table;
+  border-collapse: collapse;
+  line-height: normal;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#ovyumzbzzg .gt_caption {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+#ovyumzbzzg .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#ovyumzbzzg .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 3px;
+  padding-bottom: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#ovyumzbzzg .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#ovyumzbzzg .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#ovyumzbzzg .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#ovyumzbzzg .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#ovyumzbzzg .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#ovyumzbzzg .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#ovyumzbzzg .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#ovyumzbzzg .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#ovyumzbzzg .gt_spanner_row {
+  border-bottom-style: hidden;
+}
+
+#ovyumzbzzg .gt_group_heading {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  text-align: left;
+}
+
+#ovyumzbzzg .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#ovyumzbzzg .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#ovyumzbzzg .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#ovyumzbzzg .gt_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#ovyumzbzzg .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#ovyumzbzzg .gt_stub_row_group {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+  vertical-align: top;
+}
+
+#ovyumzbzzg .gt_row_group_first td {
+  border-top-width: 2px;
+}
+
+#ovyumzbzzg .gt_row_group_first th {
+  border-top-width: 2px;
+}
+
+#ovyumzbzzg .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#ovyumzbzzg .gt_first_summary_row {
+  border-top-style: solid;
+  border-top-color: #D3D3D3;
+}
+
+#ovyumzbzzg .gt_first_summary_row.thick {
+  border-top-width: 2px;
+}
+
+#ovyumzbzzg .gt_last_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#ovyumzbzzg .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#ovyumzbzzg .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#ovyumzbzzg .gt_last_grand_summary_row_top {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: double;
+  border-bottom-width: 6px;
+  border-bottom-color: #D3D3D3;
+}
+
+#ovyumzbzzg .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+#ovyumzbzzg .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#ovyumzbzzg .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#ovyumzbzzg .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#ovyumzbzzg .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#ovyumzbzzg .gt_sourcenote {
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#ovyumzbzzg .gt_left {
+  text-align: left;
+}
+
+#ovyumzbzzg .gt_center {
+  text-align: center;
+}
+
+#ovyumzbzzg .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#ovyumzbzzg .gt_font_normal {
+  font-weight: normal;
+}
+
+#ovyumzbzzg .gt_font_bold {
+  font-weight: bold;
+}
+
+#ovyumzbzzg .gt_font_italic {
+  font-style: italic;
+}
+
+#ovyumzbzzg .gt_super {
+  font-size: 65%;
+}
+
+#ovyumzbzzg .gt_footnote_marks {
+  font-size: 75%;
+  vertical-align: 0.4em;
+  position: initial;
+}
+
+#ovyumzbzzg .gt_asterisk {
+  font-size: 100%;
+  vertical-align: 0;
+}
+
+#ovyumzbzzg .gt_indent_1 {
+  text-indent: 5px;
+}
+
+#ovyumzbzzg .gt_indent_2 {
+  text-indent: 10px;
+}
+
+#ovyumzbzzg .gt_indent_3 {
+  text-indent: 15px;
+}
+
+#ovyumzbzzg .gt_indent_4 {
+  text-indent: 20px;
+}
+
+#ovyumzbzzg .gt_indent_5 {
+  text-indent: 25px;
+}
+</style>
+<table class="gt_table" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
+  <thead>
+    <tr class="gt_col_headings">
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="<strong>Characteristic</strong>"><strong>Characteristic</strong></th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="<strong>log(OR)</strong><span class=&quot;gt_footnote_marks&quot; style=&quot;white-space:nowrap;font-style:italic;font-weight:normal;&quot;><sup>1</sup></span>"><strong>log(OR)</strong><span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;"><sup>1</sup></span></th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="<strong>95% CI</strong><span class=&quot;gt_footnote_marks&quot; style=&quot;white-space:nowrap;font-style:italic;font-weight:normal;&quot;><sup>1</sup></span>"><strong>95% CI</strong><span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;"><sup>1</sup></span></th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="<strong>p-value</strong>"><strong>p-value</strong></th>
+    </tr>
+  </thead>
+  <tbody class="gt_table_body">
+    <tr><td headers="label" class="gt_row gt_left" style="font-weight: bold;">sex</td>
+<td headers="estimate" class="gt_row gt_center"><br></td>
+<td headers="ci" class="gt_row gt_center"><br></td>
+<td headers="p.value" class="gt_row gt_center">&lt;0.001</td></tr>
+    <tr><td headers="label" class="gt_row gt_left" style="font-style: italic;">&nbsp;&nbsp;&nbsp;&nbsp;Male</td>
+<td headers="estimate" class="gt_row gt_center">—</td>
+<td headers="ci" class="gt_row gt_center">—</td>
+<td headers="p.value" class="gt_row gt_center"><br></td></tr>
+    <tr><td headers="label" class="gt_row gt_left" style="font-style: italic;">&nbsp;&nbsp;&nbsp;&nbsp;Female</td>
+<td headers="estimate" class="gt_row gt_center">-0.70</td>
+<td headers="ci" class="gt_row gt_center">-0.75, -0.64</td>
+<td headers="p.value" class="gt_row gt_center"><br></td></tr>
+    <tr><td headers="label" class="gt_row gt_left" style="font-style: italic;">&nbsp;&nbsp;&nbsp;&nbsp;Unknown</td>
+<td headers="estimate" class="gt_row gt_center">-9.1</td>
+<td headers="ci" class="gt_row gt_center"><br></td>
+<td headers="p.value" class="gt_row gt_center"><br></td></tr>
+    <tr><td headers="label" class="gt_row gt_left" style="font-weight: bold;">age</td>
+<td headers="estimate" class="gt_row gt_center">-0.01</td>
+<td headers="ci" class="gt_row gt_center">-0.02, -0.01</td>
+<td headers="p.value" class="gt_row gt_center">&lt;0.001</td></tr>
+    <tr><td headers="label" class="gt_row gt_left" style="font-weight: bold;">race</td>
+<td headers="estimate" class="gt_row gt_center"><br></td>
+<td headers="ci" class="gt_row gt_center"><br></td>
+<td headers="p.value" class="gt_row gt_center">&lt;0.001</td></tr>
+    <tr><td headers="label" class="gt_row gt_left" style="font-style: italic;">&nbsp;&nbsp;&nbsp;&nbsp;White</td>
+<td headers="estimate" class="gt_row gt_center">—</td>
+<td headers="ci" class="gt_row gt_center">—</td>
+<td headers="p.value" class="gt_row gt_center"><br></td></tr>
+    <tr><td headers="label" class="gt_row gt_left" style="font-style: italic;">&nbsp;&nbsp;&nbsp;&nbsp;American Indian or Alaska Native</td>
+<td headers="estimate" class="gt_row gt_center">0.74</td>
+<td headers="ci" class="gt_row gt_center">0.59, 0.90</td>
+<td headers="p.value" class="gt_row gt_center"><br></td></tr>
+    <tr><td headers="label" class="gt_row gt_left" style="font-style: italic;">&nbsp;&nbsp;&nbsp;&nbsp;Asian or Pacific Islander</td>
+<td headers="estimate" class="gt_row gt_center">-0.57</td>
+<td headers="ci" class="gt_row gt_center">-0.79, -0.37</td>
+<td headers="p.value" class="gt_row gt_center"><br></td></tr>
+    <tr><td headers="label" class="gt_row gt_left" style="font-style: italic;">&nbsp;&nbsp;&nbsp;&nbsp;Black</td>
+<td headers="estimate" class="gt_row gt_center">0.31</td>
+<td headers="ci" class="gt_row gt_center">0.25, 0.36</td>
+<td headers="p.value" class="gt_row gt_center"><br></td></tr>
+    <tr><td headers="label" class="gt_row gt_left" style="font-style: italic;">&nbsp;&nbsp;&nbsp;&nbsp;Hispanic</td>
+<td headers="estimate" class="gt_row gt_center">-0.34</td>
+<td headers="ci" class="gt_row gt_center">-0.43, -0.24</td>
+<td headers="p.value" class="gt_row gt_center"><br></td></tr>
+    <tr><td headers="label" class="gt_row gt_left" style="font-style: italic;">&nbsp;&nbsp;&nbsp;&nbsp;Other</td>
+<td headers="estimate" class="gt_row gt_center">-0.62</td>
+<td headers="ci" class="gt_row gt_center">-0.95, -0.32</td>
+<td headers="p.value" class="gt_row gt_center"><br></td></tr>
+    <tr><td headers="label" class="gt_row gt_left" style="font-weight: bold;">state</td>
+<td headers="estimate" class="gt_row gt_center"><br></td>
+<td headers="ci" class="gt_row gt_center"><br></td>
+<td headers="p.value" class="gt_row gt_center">&lt;0.001</td></tr>
+    <tr><td headers="label" class="gt_row gt_left" style="font-style: italic;">&nbsp;&nbsp;&nbsp;&nbsp;Iowa</td>
+<td headers="estimate" class="gt_row gt_center">—</td>
+<td headers="ci" class="gt_row gt_center">—</td>
+<td headers="p.value" class="gt_row gt_center"><br></td></tr>
+    <tr><td headers="label" class="gt_row gt_left" style="font-style: italic;">&nbsp;&nbsp;&nbsp;&nbsp;Florida</td>
+<td headers="estimate" class="gt_row gt_center">0.60</td>
+<td headers="ci" class="gt_row gt_center">0.52, 0.67</td>
+<td headers="p.value" class="gt_row gt_center"><br></td></tr>
+  </tbody>
+  
+  <tfoot class="gt_footnotes">
+    <tr>
+      <td class="gt_footnote" colspan="4"><span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;"><sup>1</sup></span> OR = Odds Ratio, CI = Confidence Interval</td>
+    </tr>
+  </tfoot>
+</table>
 </div>
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">chisq.test</span>(<span class="fu">table</span>(combined_data<span class="sc">$</span>race, combined_data<span class="sc">$</span>reincarcerated))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>
-    Pearson's Chi-squared test
-
-data:  table(combined_data$race, combined_data$reincarcerated)
-X-squared = 462.8, df = 5, p-value &lt; 2.2e-16</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>combined_data<span class="sc">$</span>sex <span class="ot">&lt;-</span> <span class="fu">factor</span>(combined_data<span class="sc">$</span>sex)</span>
-<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>combined_data<span class="sc">$</span>sex <span class="ot">&lt;-</span> <span class="fu">relevel</span>(combined_data<span class="sc">$</span>sex, <span class="at">ref =</span> <span class="st">"Male"</span>)</span>
-<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>combined_data<span class="sc">$</span>race <span class="ot">&lt;-</span> <span class="fu">factor</span>(combined_data<span class="sc">$</span>race)</span>
-<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>combined_data<span class="sc">$</span>race <span class="ot">&lt;-</span> <span class="fu">relevel</span>(combined_data<span class="sc">$</span>race, <span class="at">ref =</span> <span class="st">"White"</span>)</span>
-<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>combined_data<span class="sc">$</span>state <span class="ot">&lt;-</span> <span class="fu">factor</span>(combined_data<span class="sc">$</span>state)</span>
-<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>combined_data<span class="sc">$</span>state <span class="ot">&lt;-</span> <span class="fu">relevel</span>(combined_data<span class="sc">$</span>state, <span class="at">ref =</span> <span class="st">"Iowa"</span>)</span>
-<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="fu">glm</span>(reincarcerated <span class="sc">~</span> sex <span class="sc">+</span> age <span class="sc">+</span> race <span class="sc">+</span> state, <span class="at">data =</span> combined_data, <span class="at">family =</span> <span class="st">"binomial"</span>)</span>
-<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>
-Call:
-glm(formula = reincarcerated ~ sex + age + race + state, family = "binomial", 
-    data = combined_data)
-
-Coefficients:
-                                       Estimate Std. Error z value Pr(&gt;|z|)    
-(Intercept)                          -1.4048432  0.0351159 -40.006  &lt; 2e-16 ***
-sexFemale                            -0.6964190  0.0282812 -24.625  &lt; 2e-16 ***
-sexUnknown                           -9.1252647 49.1564263  -0.186 0.852729    
-age                                  -0.0139443  0.0009744 -14.311  &lt; 2e-16 ***
-raceAmerican Indian or Alaska Native  0.7433721  0.0789382   9.417  &lt; 2e-16 ***
-raceAsian or Pacific Islander        -0.5698694  0.1073058  -5.311 1.09e-07 ***
-raceBlack                             0.3088877  0.0277710  11.123  &lt; 2e-16 ***
-raceHispanic                         -0.3366326  0.0474185  -7.099 1.26e-12 ***
-raceOther                            -0.6211446  0.1608214  -3.862 0.000112 ***
-stateFlorida                          0.5956697  0.0399722  14.902  &lt; 2e-16 ***
----
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-
-(Dispersion parameter for binomial family taken to be 1)
-
-    Null deviance: 58968  on 77817  degrees of freedom
-Residual deviance: 57459  on 77808  degrees of freedom
-  (1 observation deleted due to missingness)
-AIC: 57479
-
-Number of Fisher Scoring iterations: 10</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Effect of Age on Probability of Reincarceration by Race</span></span>
-<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="co">#Male</span></span>
-<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>model_without_state <span class="ot">&lt;-</span> <span class="fu">glm</span>(reincarcerated <span class="sc">~</span> sex <span class="sc">+</span> age <span class="sc">+</span> race, <span class="at">family =</span> <span class="st">"binomial"</span>, <span class="at">data =</span> combined_data)</span>
-<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>min_age <span class="ot">&lt;-</span> <span class="fu">min</span>(combined_data<span class="sc">$</span>age, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>max_age <span class="ot">&lt;-</span> <span class="fu">max</span>(combined_data<span class="sc">$</span>age, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a>new_data <span class="ot">&lt;-</span> <span class="fu">expand.grid</span>(</span>
-<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">sex =</span> <span class="fu">factor</span>(<span class="st">"Male"</span>, <span class="at">levels =</span> <span class="fu">levels</span>(combined_data<span class="sc">$</span>sex)),</span>
-<span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">age =</span> <span class="fu">seq</span>(min_age, max_age, <span class="at">length.out =</span> <span class="dv">100</span>),</span>
-<span id="cb31-9"><a href="#cb31-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">race =</span> <span class="fu">levels</span>(combined_data<span class="sc">$</span>race)</span>
-<span id="cb31-10"><a href="#cb31-10" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb31-11"><a href="#cb31-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-12"><a href="#cb31-12" aria-hidden="true" tabindex="-1"></a>new_data<span class="sc">$</span>probability <span class="ot">&lt;-</span> <span class="fu">predict</span>(model_without_state, <span class="at">newdata =</span> new_data, <span class="at">type =</span> <span class="st">"response"</span>)</span>
-<span id="cb31-13"><a href="#cb31-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-14"><a href="#cb31-14" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(new_data, <span class="fu">aes</span>(<span class="at">x =</span> age, <span class="at">y =</span> probability, <span class="at">color =</span> race)) <span class="sc">+</span></span>
-<span id="cb31-15"><a href="#cb31-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
-<span id="cb31-16"><a href="#cb31-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Effect of Age on Probability of Reincarceration by Race_Males"</span>,</span>
-<span id="cb31-17"><a href="#cb31-17" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Age"</span>,</span>
-<span id="cb31-18"><a href="#cb31-18" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Probability of Reincarceration"</span>) <span class="sc">+</span></span>
-<span id="cb31-19"><a href="#cb31-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_brewer</span>(<span class="at">palette =</span> <span class="st">"Set1"</span>) <span class="sc">+</span></span>
-<span id="cb31-20"><a href="#cb31-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>It’s important to note that these findings contrast with the racial biases observed in the COMPAS scores. While the COMPAS scores exhibited a clear bias against African-Americans, the model and the ground truth data both suggested that American Indian or Alaska Native individuals had the highest likelihood of reoffending, followed by African-Americans. This highlights the divergent patterns of bias present in the COMPAS algorithm compared to the observed recidivism rates in the analysis.</p>
+<p>Furthermore, examination of the proportion of different races that reoffended in each state revealed that Black individuals were not the most likely to reoffend in either Florida or Iowa.</p>
+<div class="cell">
 <div class="cell-output-display">
-<p><img src="analysis_files/figure-html/unnamed-chunk-5-4.png" class="img-fluid" width="672"></p>
-</div>
-<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Female</span></span>
-<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>min_age <span class="ot">&lt;-</span> <span class="fu">min</span>(combined_data<span class="sc">$</span>age, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>max_age <span class="ot">&lt;-</span> <span class="fu">max</span>(combined_data<span class="sc">$</span>age, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>new_data <span class="ot">&lt;-</span> <span class="fu">expand.grid</span>(</span>
-<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">sex =</span> <span class="fu">factor</span>(<span class="st">"Female"</span>, <span class="at">levels =</span> <span class="fu">levels</span>(combined_data<span class="sc">$</span>sex)),</span>
-<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">age =</span> <span class="fu">seq</span>(min_age, max_age, <span class="at">length.out =</span> <span class="dv">100</span>),</span>
-<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">race =</span> <span class="fu">levels</span>(combined_data<span class="sc">$</span>race)</span>
-<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb32-9"><a href="#cb32-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-10"><a href="#cb32-10" aria-hidden="true" tabindex="-1"></a>new_data<span class="sc">$</span>probability <span class="ot">&lt;-</span> <span class="fu">predict</span>(model_without_state, <span class="at">newdata =</span> new_data, <span class="at">type =</span> <span class="st">"response"</span>)</span>
-<span id="cb32-11"><a href="#cb32-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-12"><a href="#cb32-12" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(new_data, <span class="fu">aes</span>(<span class="at">x =</span> age, <span class="at">y =</span> probability, <span class="at">color =</span> race)) <span class="sc">+</span></span>
-<span id="cb32-13"><a href="#cb32-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
-<span id="cb32-14"><a href="#cb32-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Effect of Age on Probability of Reincarceration by Race_Females"</span>,</span>
-<span id="cb32-15"><a href="#cb32-15" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Age"</span>,</span>
-<span id="cb32-16"><a href="#cb32-16" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Probability of Reincarceration"</span>) <span class="sc">+</span></span>
-<span id="cb32-17"><a href="#cb32-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_brewer</span>(<span class="at">palette =</span> <span class="st">"Set1"</span>) <span class="sc">+</span></span>
-<span id="cb32-18"><a href="#cb32-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<p><img src="analysis_files/figure-html/unnamed-chunk-5-5.png" class="img-fluid" width="672"></p>
-</div>
-<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Probability of Reincarceration by Race</span></span>
-<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="co">#Male</span></span>
-<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>new_data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
-<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">sex =</span> <span class="fu">factor</span>(<span class="st">"Male"</span>, <span class="at">levels =</span> <span class="fu">levels</span>(combined_data<span class="sc">$</span>sex)),</span>
-<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">age =</span> <span class="fu">mean</span>(combined_data<span class="sc">$</span>age, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">race =</span> <span class="fu">levels</span>(combined_data<span class="sc">$</span>race)</span>
-<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb33-9"><a href="#cb33-9" aria-hidden="true" tabindex="-1"></a>new_data<span class="sc">$</span>probability <span class="ot">&lt;-</span> <span class="fu">predict</span>(model_without_state, <span class="at">newdata =</span> new_data, <span class="at">type =</span> <span class="st">"response"</span>)</span>
-<span id="cb33-10"><a href="#cb33-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb33-11"><a href="#cb33-11" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(new_data, <span class="fu">aes</span>(<span class="at">x =</span> race, <span class="at">y =</span> probability, <span class="at">fill =</span> race)) <span class="sc">+</span></span>
-<span id="cb33-12"><a href="#cb33-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>() <span class="sc">+</span></span>
-<span id="cb33-13"><a href="#cb33-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Probability of Reincarceration by Race_Male"</span>,</span>
-<span id="cb33-14"><a href="#cb33-14" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Race"</span>,</span>
-<span id="cb33-15"><a href="#cb33-15" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Probability of Reincarceration"</span>) <span class="sc">+</span></span>
-<span id="cb33-16"><a href="#cb33-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()<span class="sc">+</span></span>
-<span id="cb33-17"><a href="#cb33-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">90</span>, <span class="at">hjust =</span> <span class="dv">1</span>)) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<p><img src="analysis_files/figure-html/unnamed-chunk-5-6.png" class="img-fluid" width="672"></p>
-</div>
-<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Female</span></span>
-<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>new_data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
-<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">sex =</span> <span class="fu">factor</span>(<span class="st">"Female"</span>, <span class="at">levels =</span> <span class="fu">levels</span>(combined_data<span class="sc">$</span>sex)),</span>
-<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">age =</span> <span class="fu">mean</span>(combined_data<span class="sc">$</span>age, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">race =</span> <span class="fu">levels</span>(combined_data<span class="sc">$</span>race)</span>
-<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb34-7"><a href="#cb34-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-8"><a href="#cb34-8" aria-hidden="true" tabindex="-1"></a>new_data<span class="sc">$</span>probability <span class="ot">&lt;-</span> <span class="fu">predict</span>(model_without_state, <span class="at">newdata =</span> new_data, <span class="at">type =</span> <span class="st">"response"</span>)</span>
-<span id="cb34-9"><a href="#cb34-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-10"><a href="#cb34-10" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(new_data, <span class="fu">aes</span>(<span class="at">x =</span> race, <span class="at">y =</span> probability, <span class="at">fill =</span> race)) <span class="sc">+</span></span>
-<span id="cb34-11"><a href="#cb34-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>() <span class="sc">+</span></span>
-<span id="cb34-12"><a href="#cb34-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Probability of Reincarceration by Race_Female"</span>,</span>
-<span id="cb34-13"><a href="#cb34-13" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Race"</span>,</span>
-<span id="cb34-14"><a href="#cb34-14" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Probability of Reincarceration"</span>) <span class="sc">+</span></span>
-<span id="cb34-15"><a href="#cb34-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()<span class="sc">+</span></span>
-<span id="cb34-16"><a href="#cb34-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">90</span>, <span class="at">hjust =</span> <span class="dv">1</span>)) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<p><img src="analysis_files/figure-html/unnamed-chunk-5-7.png" class="img-fluid" width="672"></p>
+<p><img src="analysis_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
+<p>These results underscore the importance of critically evaluating and calibrating risk assessment tools like COMPAS to ensure that they accurately reflect real-world patterns and do not perpetuate or amplify existing biases against certain racial or ethnic groups. The findings highlight the complex interplay of factors that influence recidivism rates and the potential for data-driven models to exhibit biases or inaccuracies if not carefully constructed and validated. While the model captures some underlying patterns, it is crucial to acknowledge that historical data on recidivism rates should not be blindly extrapolated to make sweeping generalizations about entire racial or ethnic groups. Just because certain groups may have higher observed reoffending rates in the past does not justify assigning elevated risk scores or harsher sentences to all individuals from those backgrounds. Such an approach would only perpetuate cycles of systemic discrimination and undermine the principles of equal justice under the law.</p>
+<p>The analysis underscores the need for a more nuanced and individualized approach to risk assessment, one that accounts for the multitude of factors that influence an individual’s likelihood of reoffending. While data-driven models can provide valuable insights, they must be carefully calibrated, validated, and complemented with human judgment and a deep understanding of the underlying societal dynamics at play. Furthermore, ongoing efforts to address systemic biases, improve data quality, and explore alternative modeling approaches are crucial for developing more equitable and effective risk assessment tools.</p>
+
+
 </section>
-</section>
-<section id="flaws-and-limitations" class="level2">
-<h2 class="anchored" data-anchor-id="flaws-and-limitations">Flaws and Limitations</h2>
-<ul>
-<li>Limitation on Data Source</li>
-</ul>
-
-
 </section>
 </section>
 
