@@ -191,11 +191,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="source" class="level4">
 <h4 class="anchored" data-anchor-id="source">Source</h4>
 <p><a href="https://github.com/propublica/compas-analysis">Link To Dataset</a></p>
-<p>ProPublica conducted an in-depth analysis of the COMPAS algorithm by obtaining data from the Broward County Sheriff’s Office in Florida through a public records request. This dataset included COMPAS scores and the components used by COMPAS algoraithm to calculate COMPAS score. ProPublica compiled these individuals’ criminal histories by matching COMPAS scores with public records using names and birthdates. They defined recidivism based on Northpointe’s criteria, focusing on new criminal offenses within two years of a COMPAS assessment. Their analysis included examining the distribution of COMPAS scores, using logistic regression to assess the impact of various factors on these scores, and employing a Cox proportional hazards model to compare actual recidivism rates against predictions.</p>
+<p>The dataset was obtained through a public records request from the Broward County Sheriff’s Office in Florida and analyzed by ProPublica. It includes COMPAS scores and relevant components utilized in score calculations. ProPublica enhanced the dataset by matching these scores with public criminal records, based on individual names and birthdates. Recidivism was defined according to Northpointe’s criteria, considering new criminal offenses committed within two years post-COMPAS assessment. Analytical methods applied include logistic regression and Cox proportional hazards models, aiming to evaluate the influence of various factors on scores and to compare predicted against actual recidivism rates.</p>
 </section>
 <section id="layout" class="level4">
 <h4 class="anchored" data-anchor-id="layout">Layout</h4>
-<p>Within the GitHub repository there are several data files. For the purposes of our analysis, we will only be focusing on the <code>compas-scores-raw.csv</code> file which contains the raw data obtained by ProPublica via a public records request. This file contains 28 variables. Of these 28, we have determined that we will be focusing on the following 8:</p>
+<p>Focus is placed on the compas-scores-raw.csv file from the GitHub repository, featuring 28 variables. Of these, eight are prioritized for analysis: individual_ID, Sex_Code_Text, Ethnic_Code_Text, DateOfBirth, Age, RawScore, DecileScore, and ScoreText. Variables have been recoded for clarity in subsequent analyses.</p>
 <ul>
 <li><strong>individual_ID:</strong> The unique identifier for each individual</li>
 <li><strong>Sex_Code_Text:</strong> Indicates the individual’s sex. We have re-coded this variable to <code>Sex</code> in the cleaned dataset.</li>
@@ -224,10 +224,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 ✖ dplyr::lag()    masks stats::lag()
 ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)      <span class="co"># For attribute selection</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lubridate)  <span class="co"># For calculating COMPAS person's age</span></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>compas_data <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"dataset"</span>, <span class="st">"compas-scores-raw.csv"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lubridate)  <span class="co"># For calculating COMPAS person's age</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>compas_data <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"dataset"</span>, <span class="st">"compas-scores-raw.csv"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Rows: 60843 Columns: 28
 ── Column specification ────────────────────────────────────────────────────────
@@ -255,42 +254,34 @@ dbl (10): Person_ID, AssessmentID, Case_ID, ScaleSet_ID, RecSupervisionLevel...
 <span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a><span class="fu">save</span>(compas_data_clean, <span class="at">file =</span> here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"dataset/compas-scores-clean.RData"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>The above code:</p>
+<p>The code executes the following operations:</p>
 <ol type="1">
-<li>load the data from <code>compas-scores-raw.csv</code> in our <code>dataset</code> directory</li>
-<li>Then it tells R that <code>DateOfBirth</code> field follows <code>mm/dd/yyyy</code> format and <code>Screening_Date</code> follows <code>mm/dd/yyyy hh:mm</code> format using <code>mdy</code> and <code>mdy_hm</code> function from <code>lubridate</code> package.</li>
-<li>Using the difference in days between <code>DateOfBirth</code> and <code>Screening_Date</code>, we can calculate the age of that person. We then save the age to a field called <code>Age</code>.</li>
-<li>Then using <code>dplyr</code> package, we project on only those fields that we think is useful to us and drop any triples with na values.</li>
-<li>We save the clean data to <code>compas-scores-clean.csv</code> to our <code>dataset</code> directory.</li>
+<li>Loads the data from compas-scores-raw.csv located in the dataset directory.</li>
+<li>Formats the DateOfBirth field to mm/dd/yyyy, and the Screening_Date to mm/dd/yyyy hh:mm using the mdy and mdy_hm functions from the lubridate package.</li>
+<li>Calculates the age of the individual by determining the difference in days between DateOfBirth and Screening_Date. The computed age is then stored in a field named Age.</li>
+<li>Utilizes the tidyverse package to select only the relevant fields for analysis and to exclude any records with missing values.</li>
+<li>Saves the cleaned data to compas-scores-clean.csv within the dataset directory.</li>
 </ol>
 <p>Here is the visualization of cleaned COMPAS(1) dataset:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(compas_data_clean<span class="sc">$</span>Age, <span class="at">main=</span><span class="st">"Age Distribution"</span>, <span class="at">xlab=</span><span class="st">"Age"</span>, <span class="at">col=</span><span class="st">"blue"</span>, <span class="at">breaks=</span><span class="dv">50</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="data_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid" width="672"></p>
 </div>
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">barplot</span>(<span class="fu">table</span>(compas_data_clean<span class="sc">$</span>Sex), <span class="at">main=</span><span class="st">"Sex Distribution"</span>, <span class="at">col=</span><span class="st">"salmon"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="data_files/figure-html/unnamed-chunk-2-2.png" class="img-fluid" width="672"></p>
 </div>
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">barplot</span>(<span class="fu">table</span>(compas_data_clean<span class="sc">$</span>Race), <span class="at">main=</span><span class="st">"Race Distribution"</span>, <span class="at">col=</span><span class="st">"lightblue"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="data_files/figure-html/unnamed-chunk-2-3.png" class="img-fluid" width="672"></p>
 </div>
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">barplot</span>(<span class="fu">table</span>(compas_data_clean<span class="sc">$</span>ScoreText), <span class="at">main=</span><span class="st">"Score Category Distribution"</span>, <span class="at">col=</span><span class="st">"lightgreen"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="data_files/figure-html/unnamed-chunk-2-4.png" class="img-fluid" width="672"></p>
 </div>
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(RawScore <span class="sc">~</span> Race, <span class="at">data=</span>compas_data_clean, <span class="at">main=</span><span class="st">"Raw Score Distribution by Race"</span>, <span class="at">xlab=</span><span class="st">"Race"</span>, <span class="at">ylab=</span><span class="st">"Raw Score"</span>, <span class="at">col=</span><span class="st">"yellow"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="data_files/figure-html/unnamed-chunk-2-5.png" class="img-fluid" width="672"></p>
 </div>
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(compas_data_clean<span class="sc">$</span>DecileScore, <span class="at">main=</span><span class="st">"Decile Score Distribution"</span>, <span class="at">xlab=</span><span class="st">"Decile Score"</span>, <span class="at">col=</span><span class="st">"gray"</span>, <span class="at">breaks=</span><span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="data_files/figure-html/unnamed-chunk-2-6.png" class="img-fluid" width="672"></p>
 </div>
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>table_sex_scoretext <span class="ot">&lt;-</span> <span class="fu">table</span>(compas_data_clean<span class="sc">$</span>Sex, compas_data_clean<span class="sc">$</span>ScoreText)</span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">barplot</span>(table_sex_scoretext, <span class="at">main=</span><span class="st">"Score Text by Sex"</span>, <span class="at">col=</span><span class="fu">c</span>(<span class="st">"green"</span>, <span class="st">"red"</span>, <span class="st">"blue"</span>), <span class="at">legend=</span><span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="data_files/figure-html/unnamed-chunk-2-7.png" class="img-fluid" width="672"></p>
 </div>
@@ -318,7 +309,7 @@ dbl (10): Person_ID, AssessmentID, Case_ID, ScaleSet_ID, RecSupervisionLevel...
 <h4 class="anchored" data-anchor-id="cleaning-and-loading-1">Cleaning and Loading</h4>
 <p><strong>Below is the data cleaning script</strong></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>iowa_data <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"dataset"</span>, <span class="st">"Iowa_Probation_Recidivism_Status_20240403.csv"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>iowa_data <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"dataset"</span>, <span class="st">"Iowa_Probation_Recidivism_Status_20240403.csv"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Rows: 73076 Columns: 29
 ── Column specification ────────────────────────────────────────────────────────
@@ -330,9 +321,9 @@ lgl  (2): Under 18, Reincarcerated
 ℹ Use `spec()` to retrieve the full column specification for this data.
 ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>iowa_data_clean <span class="ot">&lt;-</span> iowa_data <span class="sc">%&gt;%</span></span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="at">sex =</span> Sex, <span class="at">race =</span> Race, <span class="at">age =</span> Age, <span class="at">reincarcerated =</span> Reincarcerated)</span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(iowa_data_clean)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>iowa_data_clean <span class="ot">&lt;-</span> iowa_data <span class="sc">%&gt;%</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="at">sex =</span> Sex, <span class="at">race =</span> Race, <span class="at">age =</span> Age, <span class="at">reincarcerated =</span> Reincarcerated)</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(iowa_data_clean)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>     sex                race                age        reincarcerated 
  Length:73076       Length:73076       Min.   :16.10   Mode :logical  
@@ -344,27 +335,23 @@ lgl  (2): Under 18, Reincarcerated
                                        NA's   :1                      </code></pre>
 </div>
 </div>
-<p>The above code:</p>
+<p>The code executes the following operations:</p>
 <ol type="1">
-<li>load the data from <code>Iowa_Probation_Recidivism_Status_20240403.csv</code> in our <code>dataset</code> directory</li>
-<li>select the variables that we want to analyse and rename them in order to prepare for merging the dataset</li>
-<li>summarize and provide a overview of the data in the cleaned dataset</li>
+<li>Loads the data from <code>Iowa_Probation_Recidivism_Status_20240403.csv</code> in our <code>dataset</code> directory</li>
+<li>Selects the variables that we want to analyse and rename them in order to prepare for merging the dataset</li>
+<li>Summarizes and provide a overview of the data in the cleaned dataset</li>
 </ol>
 <p>Here is the visualization of the cleaned Iowa dataset:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(iowa_data_clean<span class="sc">$</span>age, <span class="at">main=</span><span class="st">"Age Distribution"</span>, <span class="at">xlab=</span><span class="st">"Age"</span>, <span class="at">col=</span><span class="st">"blue"</span>, <span class="at">breaks=</span><span class="dv">50</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="data_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid" width="672"></p>
 </div>
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">barplot</span>(<span class="fu">table</span>(iowa_data_clean<span class="sc">$</span>sex), <span class="at">main=</span><span class="st">"Sex Distribution"</span>, <span class="at">col=</span><span class="st">"salmon"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="data_files/figure-html/unnamed-chunk-4-2.png" class="img-fluid" width="672"></p>
 </div>
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">barplot</span>(<span class="fu">table</span>(iowa_data_clean<span class="sc">$</span>race), <span class="at">main=</span><span class="st">"Race Distribution"</span>, <span class="at">col=</span><span class="st">"lightblue"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="data_files/figure-html/unnamed-chunk-4-3.png" class="img-fluid" width="672"></p>
 </div>
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">barplot</span>(<span class="fu">table</span>(iowa_data_clean<span class="sc">$</span>reincarcerated), <span class="at">main=</span><span class="st">"incarceration Distribution"</span>, <span class="at">col=</span><span class="st">"lightyellow"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="data_files/figure-html/unnamed-chunk-4-4.png" class="img-fluid" width="672"></p>
 </div>
@@ -388,8 +375,9 @@ lgl  (2): Under 18, Reincarcerated
 <li><strong>reincarcerated:</strong> Indicator of whether the individual was incarcerated.</li>
 </ul>
 <p>Cleaning the dataset</p>
+<p><strong>Below is the data cleaning script</strong></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>compas_two_years_violent <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"dataset"</span>, <span class="st">"compas-scores-two-years-violent.csv"</span>), <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>compas_two_years_violent <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"dataset"</span>, <span class="st">"compas-scores-two-years-violent.csv"</span>), <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>New names:
 • `decile_score` -&gt; `decile_score...12`
@@ -401,25 +389,25 @@ lgl  (2): Under 18, Reincarcerated
 • `` -&gt; `...56`
 • `` -&gt; `...57`</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># rename decile_score name (weird because of the index)</span></span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(compas_two_years_violent)[<span class="fu">which</span>(<span class="fu">colnames</span>(compas_two_years_violent) <span class="sc">==</span> <span class="st">"decile_score...40"</span>)] <span class="ot">&lt;-</span> <span class="st">"decile_score"</span></span>
-<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a><span class="co"># keep only relative fields</span></span>
-<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>compas_two_years_violent <span class="ot">&lt;-</span> compas_two_years_violent  <span class="sc">%&gt;%</span></span>
-<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(sex, age, race, decile_score, score_text, reincarcerated)</span>
-<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Delete records with decile_score = -1</span></span>
-<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a>compas_two_years_violent <span class="ot">&lt;-</span> compas_two_years_violent <span class="sc">%&gt;%</span></span>
-<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(decile_score <span class="sc">!=</span> <span class="sc">-</span><span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># rename decile_score name (weird because of the index)</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(compas_two_years_violent)[<span class="fu">which</span>(<span class="fu">colnames</span>(compas_two_years_violent) <span class="sc">==</span> <span class="st">"decile_score...40"</span>)] <span class="ot">&lt;-</span> <span class="st">"decile_score"</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="co"># keep only relative fields</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>compas_two_years_violent <span class="ot">&lt;-</span> compas_two_years_violent  <span class="sc">%&gt;%</span></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(sex, age, race, decile_score, score_text, reincarcerated)</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Delete records with decile_score = -1</span></span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>compas_two_years_violent <span class="ot">&lt;-</span> compas_two_years_violent <span class="sc">%&gt;%</span></span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(decile_score <span class="sc">!=</span> <span class="sc">-</span><span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>The above code:</p>
+<p>The code executes the following operations:</p>
 <ol type="1">
 <li>Load the dataset and rename the field <code>decile_score...40</code> to <code>decile_score</code>. Original data consists of the index number for decile_score field.</li>
 <li>Keep only the relative fields: <code>sex</code>, <code>age</code>, <code>race</code>, <code>decile_score</code>, <code>score_text</code> and <code>reincarcerated</code>.</li>
 <li>Delete the 5 useless records with -1 decile_score (Those records have a lot of N/A).</li>
 </ol>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>new_compas <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"dataset"</span>, <span class="st">"compas-scores-two-years-violent.csv"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>new_compas <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"dataset"</span>, <span class="st">"compas-scores-two-years-violent.csv"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>New names:
 Rows: 4743 Columns: 57
@@ -439,9 +427,9 @@ Specify the column types or set `show_col_types = FALSE` to quiet this message.
 • `` -&gt; `...56`
 • `` -&gt; `...57`</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>new_compas_clean <span class="ot">&lt;-</span> new_compas <span class="sc">%&gt;%</span></span>
-<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(sex, age, race, reincarcerated)</span>
-<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(new_compas_clean)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>new_compas_clean <span class="ot">&lt;-</span> new_compas <span class="sc">%&gt;%</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(sex, age, race, reincarcerated)</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(new_compas_clean)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>     sex                 age         race           reincarcerated 
  Length:4743        Min.   :18   Length:4743        Mode :logical  
@@ -452,27 +440,23 @@ Specify the column types or set `show_col_types = FALSE` to quiet this message.
                     Max.   :83                                     </code></pre>
 </div>
 </div>
-<p>The above code:</p>
+<p>The code executes the following operations:</p>
 <ol type="1">
-<li>load the data from <code>compas-scores-two-years-violent.csv</code> in our <code>dataset</code> directory</li>
-<li>select the variables that we want to analyse and rename them in order to prepare for merging the dataset</li>
-<li>summarize and provide a overview of the data in the cleaned dataset</li>
+<li>Loads the data from <code>compas-scores-two-years-violent.csv</code> in our <code>dataset</code> directory</li>
+<li>Selects the variables that we want to analyse and rename them in order to prepare for merging the dataset</li>
+<li>Summarizes and provide a overview of the data in the cleaned dataset</li>
 </ol>
 <p>Here is the visualization of the cleaned COMPAS(2) dataset:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(new_compas_clean<span class="sc">$</span>age, <span class="at">main=</span><span class="st">"Age Distribution"</span>, <span class="at">xlab=</span><span class="st">"Age"</span>, <span class="at">col=</span><span class="st">"blue"</span>, <span class="at">breaks=</span><span class="dv">50</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="data_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid" width="672"></p>
 </div>
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">barplot</span>(<span class="fu">table</span>(new_compas_clean<span class="sc">$</span>sex), <span class="at">main=</span><span class="st">"Sex Distribution"</span>, <span class="at">col=</span><span class="st">"salmon"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="data_files/figure-html/unnamed-chunk-6-2.png" class="img-fluid" width="672"></p>
 </div>
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">barplot</span>(<span class="fu">table</span>(new_compas_clean<span class="sc">$</span>race), <span class="at">main=</span><span class="st">"Race Distribution"</span>, <span class="at">col=</span><span class="st">"lightblue"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="data_files/figure-html/unnamed-chunk-6-3.png" class="img-fluid" width="672"></p>
 </div>
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">barplot</span>(<span class="fu">table</span>(new_compas_clean<span class="sc">$</span>reincarcerated), <span class="at">main=</span><span class="st">"incarceration Distribution"</span>, <span class="at">col=</span><span class="st">"lightyellow"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="data_files/figure-html/unnamed-chunk-6-4.png" class="img-fluid" width="672"></p>
 </div>
@@ -481,12 +465,15 @@ Specify the column types or set `show_col_types = FALSE` to quiet this message.
 </section>
 <section id="merged-dataset" class="level3">
 <h3 class="anchored" data-anchor-id="merged-dataset">Merged dataset</h3>
-<p>Our merged dataset combines data from Florida and Iowa, focusing on variables such as sex, age, race, and incarceration status. Previously, we prepared the Iowa dataset and the COMPAS dataset by cleaning these variables. Additionally, we have added a column to each dataset indicating the respective state from which the data originates.</p>
+<p>The merged dataset combines data from Florida and Iowa, emphasizing variables such as sex, age, race, and incarceration status. A state indicator is added to each entry to specify its origin, facilitating comparative analysis across different jurisdictions.</p>
+<section id="merging-the-dataset" class="level4">
+<h4 class="anchored" data-anchor-id="merging-the-dataset">Merging the dataset</h4>
+<p><strong>Below is the data merging script</strong></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>new_compas_clean <span class="ot">&lt;-</span> new_compas_clean <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">state =</span> <span class="st">"Florida"</span>)</span>
-<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>iowa_data_clean <span class="ot">&lt;-</span> iowa_data_clean <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">state =</span> <span class="st">"Iowa"</span>)</span>
-<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>combined_data <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(new_compas_clean, iowa_data_clean)</span>
-<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(combined_data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>new_compas_clean <span class="ot">&lt;-</span> new_compas_clean <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">state =</span> <span class="st">"Florida"</span>)</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>iowa_data_clean <span class="ot">&lt;-</span> iowa_data_clean <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">state =</span> <span class="st">"Iowa"</span>)</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>combined_data <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(new_compas_clean, iowa_data_clean)</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(combined_data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>     sex                 age            race           reincarcerated 
  Length:77819       Min.   :16.10   Length:77819       Mode :logical  
@@ -508,31 +495,33 @@ Specify the column types or set `show_col_types = FALSE` to quiet this message.
 </div>
 <p>Here is the visualization of the merged dataset:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(combined_data<span class="sc">$</span>age, <span class="at">main=</span><span class="st">"Age Distribution"</span>, <span class="at">xlab=</span><span class="st">"Age"</span>, <span class="at">col=</span><span class="st">"blue"</span>, <span class="at">breaks=</span><span class="dv">50</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="data_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid" width="672"></p>
 </div>
-<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">barplot</span>(<span class="fu">table</span>(combined_data<span class="sc">$</span>sex), <span class="at">main=</span><span class="st">"Sex Distribution"</span>, <span class="at">col=</span><span class="st">"salmon"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="data_files/figure-html/unnamed-chunk-8-2.png" class="img-fluid" width="672"></p>
 </div>
-<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">barplot</span>(<span class="fu">table</span>(combined_data<span class="sc">$</span>race), <span class="at">main=</span><span class="st">"Race Distribution"</span>, <span class="at">col=</span><span class="st">"lightblue"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="data_files/figure-html/unnamed-chunk-8-3.png" class="img-fluid" width="672"></p>
 </div>
-<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fu">barplot</span>(<span class="fu">table</span>(combined_data<span class="sc">$</span>state), <span class="at">main=</span><span class="st">"State Distribution"</span>, <span class="at">col=</span><span class="st">"lightgreen"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="data_files/figure-html/unnamed-chunk-8-4.png" class="img-fluid" width="672"></p>
 </div>
-<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">barplot</span>(<span class="fu">table</span>(combined_data<span class="sc">$</span>reincarcerated), <span class="at">main=</span><span class="st">"incarceration Distribution"</span>, <span class="at">col=</span><span class="st">"lightyellow"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="data_files/figure-html/unnamed-chunk-8-5.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 </section>
 </section>
+</section>
 <section id="r-packages-used" class="level2">
 <h2 class="anchored" data-anchor-id="r-packages-used">R Packages Used</h2>
+<p>The analysis incorporated the following libraries beyond the curriculum:</p>
+<ul>
+<li><strong>lubridate:</strong> This library facilitated the calculation of ages, enhancing the accuracy of demographic analyses.</li>
+<li>**pROC:* Employed for computing and plotting the Receiver Operating Characteristic (ROC) curve and the area under the ROC curve, providing insights into the predictive accuracy of the models.</li>
+<li>**gtsummary:* Utilized to generate concise summary tables for the models, aiding in the clear presentation and interpretation of statistical results.</li>
+</ul>
 
 
 </section>
