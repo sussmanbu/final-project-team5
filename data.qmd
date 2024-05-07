@@ -212,6 +212,6 @@ barplot(table(combined_data$reincarcerated), main="incarceration Distribution", 
 
 The analysis incorporated the following libraries beyond the curriculum:
 
--   **lubridate:** This library facilitated the calculation of ages, enhancing the accuracy of demographic analyses.
--   **pROC:* Employed for computing and plotting the Receiver Operating Characteristic (ROC) curve and the area under the ROC curve, providing insights into the predictive accuracy of the models.
--   **gtsummary:* Utilized to generate concise summary tables for the models, aiding in the clear presentation and interpretation of statistical results.
+-   **lubridate**: This library facilitated the calculation of ages, enhancing the accuracy of demographic analyses.
+-   **pROC**: Employed for computing and plotting the Receiver Operating Characteristic (ROC) curve and the area under the ROC curve, providing insights into the predictive accuracy of the models.
+-   **gtsummary**: Utilized to generate concise summary tables for the models, aiding in the clear presentation and interpretation of statistical results.
