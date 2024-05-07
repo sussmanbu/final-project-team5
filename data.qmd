@@ -5,6 +5,8 @@ toc: true
 draft: false
 ---
 
+![](images/clipboard-2282318393.png)
+
 ## Data Sources
 
 ### Data Set 1: COMPAS Recidivism Dataset(1)
@@ -58,11 +60,11 @@ save(compas_data_clean, file = here::here("dataset/compas-scores-clean.RData"))
 
 The code executes the following operations:
 
-1.    Loads the data from compas-scores-raw.csv located in the dataset directory.
-2.    Formats the DateOfBirth field to mm/dd/yyyy, and the Screening_Date to mm/dd/yyyy hh:mm using the mdy and mdy_hm functions from the lubridate package.
-3.    Calculates the age of the individual by determining the difference in days between DateOfBirth and Screening_Date. The computed age is then stored in a field named Age.
-4.    Utilizes the tidyverse package to select only the relevant fields for analysis and to exclude any records with missing values.
-5.    Saves the cleaned data to compas-scores-clean.csv within the dataset directory.
+1.  Loads the data from compas-scores-raw.csv located in the dataset directory.
+2.  Formats the DateOfBirth field to mm/dd/yyyy, and the Screening_Date to mm/dd/yyyy hh:mm using the mdy and mdy_hm functions from the lubridate package.
+3.  Calculates the age of the individual by determining the difference in days between DateOfBirth and Screening_Date. The computed age is then stored in a field named Age.
+4.  Utilizes the tidyverse package to select only the relevant fields for analysis and to exclude any records with missing values.
+5.  Saves the cleaned data to compas-scores-clean.csv within the dataset directory.
 
 Here is the visualization of cleaned COMPAS(1) dataset:
 
