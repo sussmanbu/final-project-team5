@@ -13,11 +13,11 @@ draft: false
 
 [Link To Dataset](https://github.com/propublica/compas-analysis)
 
-ProPublica conducted an in-depth analysis of the COMPAS algorithm by obtaining data from the Broward County Sheriff’s Office in Florida through a public records request. This dataset included COMPAS scores and the components used by COMPAS algoraithm to calculate COMPAS score. ProPublica compiled these individuals' criminal histories by matching COMPAS scores with public records using names and birthdates. They defined recidivism based on Northpointe’s criteria, focusing on new criminal offenses within two years of a COMPAS assessment. Their analysis included examining the distribution of COMPAS scores, using logistic regression to assess the impact of various factors on these scores, and employing a Cox proportional hazards model to compare actual recidivism rates against predictions.
+The dataset was obtained through a public records request from the Broward County Sheriff’s Office in Florida and analyzed by ProPublica. It includes COMPAS scores and relevant components utilized in score calculations. ProPublica enhanced the dataset by matching these scores with public criminal records, based on individual names and birthdates. Recidivism was defined according to Northpointe’s criteria, considering new criminal offenses committed within two years post-COMPAS assessment. Analytical methods applied include logistic regression and Cox proportional hazards models, aiming to evaluate the influence of various factors on scores and to compare predicted against actual recidivism rates.
 
 #### Layout
 
-Within the GitHub repository there are several data files. For the purposes of our analysis, we will only be focusing on the `compas-scores-raw.csv` file which contains the raw data obtained by ProPublica via a public records request. This file contains 28 variables. Of these 28, we have determined that we will be focusing on the following 8:
+Focus is placed on the compas-scores-raw.csv file from the GitHub repository, featuring 28 variables. Of these, eight are prioritized for analysis: individual_ID, Sex_Code_Text, Ethnic_Code_Text, DateOfBirth, Age, RawScore, DecileScore, and ScoreText. Variables have been recoded for clarity in subsequent analyses.
 
 -   **individual_ID:** The unique identifier for each individual
 -   **Sex_Code_Text:** Indicates the individual's sex. We have re-coded this variable to `Sex` in the cleaned dataset.
@@ -34,7 +34,6 @@ Within the GitHub repository there are several data files. For the purposes of o
 
 ```{r}
 library(tidyverse)
-library(dplyr)      # For attribute selection
 library(lubridate)  # For calculating COMPAS person's age
 
 compas_data <- read_csv(here::here("dataset", "compas-scores-raw.csv"))
@@ -57,17 +56,17 @@ write_csv(compas_data_clean, file = here::here("dataset", "compas-scores-clean.c
 save(compas_data_clean, file = here::here("dataset/compas-scores-clean.RData"))
 ```
 
-The above code:
+The code executes the following operations:
 
-1.  load the data from `compas-scores-raw.csv` in our `dataset` directory
-2.  Then it tells R that `DateOfBirth` field follows `mm/dd/yyyy` format and `Screening_Date` follows `mm/dd/yyyy hh:mm` format using `mdy` and `mdy_hm` function from `lubridate` package.
-3.  Using the difference in days between `DateOfBirth` and `Screening_Date`, we can calculate the age of that person. We then save the age to a field called `Age`.
-4.  Then using `dplyr` package, we project on only those fields that we think is useful to us and drop any triples with na values.
-5.  We save the clean data to `compas-scores-clean.csv` to our `dataset` directory.
+1.    Loads the data from compas-scores-raw.csv located in the dataset directory.
+2.    Formats the DateOfBirth field to mm/dd/yyyy, and the Screening_Date to mm/dd/yyyy hh:mm using the mdy and mdy_hm functions from the lubridate package.
+3.    Calculates the age of the individual by determining the difference in days between DateOfBirth and Screening_Date. The computed age is then stored in a field named Age.
+4.    Utilizes the tidyverse package to select only the relevant fields for analysis and to exclude any records with missing values.
+5.    Saves the cleaned data to compas-scores-clean.csv within the dataset directory.
 
 Here is the visualization of cleaned COMPAS(1) dataset:
 
-```{r}
+```{r echo=FALSE}
 hist(compas_data_clean$Age, main="Age Distribution", xlab="Age", col="blue", breaks=50)
 barplot(table(compas_data_clean$Sex), main="Sex Distribution", col="salmon")
 barplot(table(compas_data_clean$Race), main="Race Distribution", col="lightblue")
@@ -106,15 +105,15 @@ iowa_data_clean <- iowa_data %>%
 summary(iowa_data_clean)
 ```
 
-The above code:
+The code executes the following operations:
 
-1.  load the data from `Iowa_Probation_Recidivism_Status_20240403.csv` in our `dataset` directory
-2.  select the variables that we want to analyse and rename them in order to prepare for merging the dataset
-3.  summarize and provide a overview of the data in the cleaned dataset
+1.  Loads the data from `Iowa_Probation_Recidivism_Status_20240403.csv` in our `dataset` directory
+2.  Selects the variables that we want to analyse and rename them in order to prepare for merging the dataset
+3.  Summarizes and provide a overview of the data in the cleaned dataset
 
 Here is the visualization of the cleaned Iowa dataset:
 
-```{r}
+```{r echo=FALSE}
 hist(iowa_data_clean$age, main="Age Distribution", xlab="Age", col="blue", breaks=50)
 barplot(table(iowa_data_clean$sex), main="Sex Distribution", col="salmon")
 barplot(table(iowa_data_clean$race), main="Race Distribution", col="lightblue")
@@ -140,6 +139,8 @@ To merge this dataset with the Iowa dataset in order to study the general trend 
 
 Cleaning the dataset
 
+**Below is the data cleaning script**
+
 ```{r Data cleaning for compas_two_years_violent}
 compas_two_years_violent <- read_csv(here::here("dataset", "compas-scores-two-years-violent.csv"), show_col_types = FALSE)
 # rename decile_score name (weird because of the index)
@@ -154,7 +155,7 @@ compas_two_years_violent <- compas_two_years_violent %>%
   filter(decile_score != -1)
 ```
 
-The above code:
+The code executes the following operations:
 
 1.  Load the dataset and rename the field `decile_score...40` to `decile_score`. Original data consists of the index number for decile_score field.
 2.  Keep only the relative fields: `sex`, `age`, `race`, `decile_score`, `score_text` and `reincarcerated`.
@@ -167,15 +168,15 @@ new_compas_clean <- new_compas %>%
 summary(new_compas_clean)
 ```
 
-The above code:
+The code executes the following operations:
 
-1.  load the data from `compas-scores-two-years-violent.csv` in our `dataset` directory
-2.  select the variables that we want to analyse and rename them in order to prepare for merging the dataset
-3.  summarize and provide a overview of the data in the cleaned dataset
+1.  Loads the data from `compas-scores-two-years-violent.csv` in our `dataset` directory
+2.  Selects the variables that we want to analyse and rename them in order to prepare for merging the dataset
+3.  Summarizes and provide a overview of the data in the cleaned dataset
 
 Here is the visualization of the cleaned COMPAS(2) dataset:
 
-```{r}
+```{r echo=FALSE}
 hist(new_compas_clean$age, main="Age Distribution", xlab="Age", col="blue", breaks=50)
 barplot(table(new_compas_clean$sex), main="Sex Distribution", col="salmon")
 barplot(table(new_compas_clean$race), main="Race Distribution", col="lightblue")
@@ -184,7 +185,11 @@ barplot(table(new_compas_clean$reincarcerated), main="incarceration Distribution
 
 ### Merged dataset
 
-Our merged dataset combines data from Florida and Iowa, focusing on variables such as sex, age, race, and incarceration status. Previously, we prepared the Iowa dataset and the COMPAS dataset by cleaning these variables. Additionally, we have added a column to each dataset indicating the respective state from which the data originates.
+The merged dataset combines data from Florida and Iowa, emphasizing variables such as sex, age, race, and incarceration status. A state indicator is added to each entry to specify its origin, facilitating comparative analysis across different jurisdictions.
+
+#### Merging the dataset
+
+**Below is the data merging script**
 
 ```{r}
 new_compas_clean <- new_compas_clean %>% mutate(state = "Florida")
@@ -195,7 +200,7 @@ summary(combined_data)
 
 Here is the visualization of the merged dataset:
 
-```{r}
+```{r echo=FALSE}
 hist(combined_data$age, main="Age Distribution", xlab="Age", col="blue", breaks=50)
 barplot(table(combined_data$sex), main="Sex Distribution", col="salmon")
 barplot(table(combined_data$race), main="Race Distribution", col="lightblue")
@@ -204,3 +209,9 @@ barplot(table(combined_data$reincarcerated), main="incarceration Distribution", 
 ```
 
 ## R Packages Used
+
+The analysis incorporated the following libraries beyond the curriculum:
+
+-   **lubridate:** This library facilitated the calculation of ages, enhancing the accuracy of demographic analyses.
+-   **pROC:* Employed for computing and plotting the Receiver Operating Characteristic (ROC) curve and the area under the ROC curve, providing insights into the predictive accuracy of the models.
+-   **gtsummary:* Utilized to generate concise summary tables for the models, aiding in the clear presentation and interpretation of statistical results.
