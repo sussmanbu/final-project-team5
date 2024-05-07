@@ -18,7 +18,7 @@
     "href": "data.html#r-packages-used",
     "title": "Data",
     "section": "R Packages Used",
-    "text": "R Packages Used\nThe analysis incorporated the following libraries beyond the curriculum:\n\nlubridate: This library facilitated the calculation of ages, enhancing the accuracy of demographic analyses.\n**pROC:* Employed for computing and plotting the Receiver Operating Characteristic (ROC) curve and the area under the ROC curve, providing insights into the predictive accuracy of the models.\n**gtsummary:* Utilized to generate concise summary tables for the models, aiding in the clear presentation and interpretation of statistical results."
+    "text": "R Packages Used\nThe analysis incorporated the following libraries beyond the curriculum:\n\nlubridate: This library facilitated the calculation of ages, enhancing the accuracy of demographic analyses.\npROC: Employed for computing and plotting the Receiver Operating Characteristic (ROC) curve and the area under the ROC curve, providing insights into the predictive accuracy of the models.\ngtsummary: Utilized to generate concise summary tables for the models, aiding in the clear presentation and interpretation of statistical results."
   },
   {
     "objectID": "analysis.html#introduction",
