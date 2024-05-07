@@ -4,11 +4,13 @@ description: ""
 toc: true
 draft: FALSE
 ---
+
 # Unveiling Bias: A Deep Dive into the COMPAS Recidivism Scores
 
 The use of algorithmic scoring in criminal justice, specifically the COMPAS (Correctional Offender Management Profiling for Alternative Sanctions) score, has been touted as a way to modernize and streamline sentencing processes. This score is meant to predict the likelihood that an individual will reoffend. However, beneath the digital facade, concerns about bias and fairness persist. Our exploration of the relationship between demographics and COMPAS score provides insights into how these scores correlate with age, sex, and race, highlighting potential biases that could influence judicial decisions and outcomes.
 
 ## Sex and Race Under the Microscope
+
 ```{r echo = FALSE, message=FALSE}
 library(tidyverse)
 library(MASS)
@@ -21,7 +23,9 @@ ggplot(compas_scores_clean, aes(x=Sex, y=DecileScore)) +
        y="DecileScore") +
   theme_minimal()
 ```
+
 First, let's examine how decile scores distribute across different genders and races. The above figure indicates a generally similar median score for both males and females, though males display a slightly wider range in scores. This could imply a greater variance in how men are assessed, potentially impacting their legal outcomes more diversely than women.
+
 ```{r echo = FALSE}
 
 df <- compas_scores_clean %>% 
@@ -41,6 +45,7 @@ ggplot(df, aes(x=Race, y=DecileScore)) +
 Race, however, tells a more concerning story. The distribution of scores by race reveals that African Americans typically receive higher decile scores compared to other races, hinting at a racial bias embedded within the scoring algorithm. This finding raises crucial ethical questions about the deployment of tools such as COMPAS in a justice system that should be blind to color.
 
 ## Age, Recidivism, and the Algorithm
+
 ```{r echo = FALSE, warning=FALSE}
 ggplot(df, aes(x = Age)) +
   geom_histogram(binwidth = 5, fill = "blue", color = "black") +
@@ -57,6 +62,8 @@ Age also plays a significant role in the COMPAS assessments. Younger individuals
 ## Exploring State-Specific and Racial Impacts on Recidivism Predictions
 
 In order to better understand the COMPAS algorithm's implications, we extended our analysis to a logistic regression model using data from Florida and Iowa, aiming to predict the binary outcome of reincarceration based on variables like sex, age, race, and state.
+
+![](images/clipboard-3228062840.png)
 
 This model brings to light intriguing insights about the impact of state and race on recidivism predictions. Notably, American Indian or Alaska Native individuals, as well as those from Florida, were found to have higher probabilities of reincarceration compared to their counterparts. This is particularly compelling given that the analysis of COMPAS scores showed a different bias—predominantly against African-Americans. Furthermore, the actual data reveals that Black individuals do not hold the highest reoffense rates in either state, challenging some preconceived notions about racial patterns in recidivism.
 
