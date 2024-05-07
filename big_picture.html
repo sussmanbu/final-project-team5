@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>MA 415 Final Project Team 5 - Unveiling Bias: A Deep Dive into the COMPAS Recidivism Scores</title>
+<title>MA 415 Final Project Team 5 - Big Picture</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -87,7 +87,7 @@ ul.task-list li input[type="checkbox"] {
   </li>  
   <li class="nav-item">
     <a class="nav-link active" href="./big_picture.html" rel="" target="" aria-current="page">
- <span class="menu-text">Unveiling Bias: A Deep Dive into the COMPAS Recidivism Scores</span></a>
+ <span class="menu-text">Big Picture</span></a>
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="./analysis.html" rel="" target="">
@@ -113,14 +113,12 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#sex-and-race-under-the-microscope" id="toc-sex-and-race-under-the-microscope" class="nav-link active" data-scroll-target="#sex-and-race-under-the-microscope">Sex and Race Under the Microscope</a></li>
-  <li><a href="#age-recidivism-and-the-algorithm" id="toc-age-recidivism-and-the-algorithm" class="nav-link" data-scroll-target="#age-recidivism-and-the-algorithm">Age, Recidivism, and the Algorithm</a></li>
-  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion">Conclusion</a></li>
-  <li><a href="#rubric-other-components" id="toc-rubric-other-components" class="nav-link" data-scroll-target="#rubric-other-components">Rubric: Other components</a>
+  <li><a href="#unveiling-bias-a-deep-dive-into-the-compas-recidivism-scores" id="toc-unveiling-bias-a-deep-dive-into-the-compas-recidivism-scores" class="nav-link active" data-scroll-target="#unveiling-bias-a-deep-dive-into-the-compas-recidivism-scores">Unveiling Bias: A Deep Dive into the COMPAS Recidivism Scores</a>
   <ul class="collapse">
-  <li><a href="#interactive" id="toc-interactive" class="nav-link" data-scroll-target="#interactive">Interactive</a></li>
-  <li><a href="#video-recording" id="toc-video-recording" class="nav-link" data-scroll-target="#video-recording">Video Recording</a></li>
-  <li><a href="#rest-of-the-site" id="toc-rest-of-the-site" class="nav-link" data-scroll-target="#rest-of-the-site">Rest of the Site</a></li>
+  <li><a href="#sex-and-race-under-the-microscope" id="toc-sex-and-race-under-the-microscope" class="nav-link" data-scroll-target="#sex-and-race-under-the-microscope">Sex and Race Under the Microscope</a></li>
+  <li><a href="#age-recidivism-and-the-algorithm" id="toc-age-recidivism-and-the-algorithm" class="nav-link" data-scroll-target="#age-recidivism-and-the-algorithm">Age, Recidivism, and the Algorithm</a></li>
+  <li><a href="#exploring-state-specific-and-racial-impacts-on-recidivism-predictions" id="toc-exploring-state-specific-and-racial-impacts-on-recidivism-predictions" class="nav-link" data-scroll-target="#exploring-state-specific-and-racial-impacts-on-recidivism-predictions">Exploring State-Specific and Racial Impacts on Recidivism Predictions</a></li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion">Conclusion</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -130,7 +128,7 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Unveiling Bias: A Deep Dive into the COMPAS Recidivism Scores</h1>
+<h1 class="title">Big Picture</h1>
 </div>
 
 
@@ -145,6 +143,8 @@ ul.task-list li input[type="checkbox"] {
 
 </header>
 
+<section id="unveiling-bias-a-deep-dive-into-the-compas-recidivism-scores" class="level1">
+<h1>Unveiling Bias: A Deep Dive into the COMPAS Recidivism Scores</h1>
 <p>The use of algorithmic scoring in criminal justice, specifically the COMPAS (Correctional Offender Management Profiling for Alternative Sanctions) score, has been touted as a way to modernize and streamline sentencing processes. This score is meant to predict the likelihood that an individual will reoffend. However, beneath the digital facade, concerns about bias and fairness persist. Our exploration of the relationship between demographics and COMPAS score provides insights into how these scores correlate with age, sex, and race, highlighting potential biases that could influence judicial decisions and outcomes.</p>
 <section id="sex-and-race-under-the-microscope" class="level2">
 <h2 class="anchored" data-anchor-id="sex-and-race-under-the-microscope">Sex and Race Under the Microscope</h2>
@@ -170,29 +170,16 @@ ul.task-list li input[type="checkbox"] {
 </div>
 <p>Age also plays a significant role in the COMPAS assessments. Younger individuals tend to have higher scores, which gradually decrease with age. This trend is consistent across all racial groups but is more pronounced in some than others, suggesting that age-related biases could intersect with racial biases to compound the effects of an already flawed system.</p>
 </section>
+<section id="exploring-state-specific-and-racial-impacts-on-recidivism-predictions" class="level2">
+<h2 class="anchored" data-anchor-id="exploring-state-specific-and-racial-impacts-on-recidivism-predictions">Exploring State-Specific and Racial Impacts on Recidivism Predictions</h2>
+<p>In order to better understand the COMPAS algorithm’s implications, we extended our analysis to a logistic regression model using data from Florida and Iowa, aiming to predict the binary outcome of reincarceration based on variables like sex, age, race, and state.</p>
+<p>This model brings to light intriguing insights about the impact of state and race on recidivism predictions. Notably, American Indian or Alaska Native individuals, as well as those from Florida, were found to have higher probabilities of reincarceration compared to their counterparts. This is particularly compelling given that the analysis of COMPAS scores showed a different bias—predominantly against African-Americans. Furthermore, the actual data reveals that Black individuals do not hold the highest reoffense rates in either state, challenging some preconceived notions about racial patterns in recidivism.</p>
+<p>By dissecting these dimensions, our analysis not only questions the fidelity of tools like COMPAS in reflecting true recidivism patterns but also underscores the critical need for calibrated, transparent risk assessments in the justice system. These insights advocate for a reassessment of how demographic factors are weighted in predictive models, ensuring they serve justice equitably without reinforcing biases.</p>
+</section>
 <section id="conclusion" class="level2">
 <h2 class="anchored" data-anchor-id="conclusion">Conclusion</h2>
 <p>What does this mean for justice? Our analysis highlights potential disparities in how COMPAS scores are assigned, with troubling implications for fairness and equality in criminal sentencing. These biases could lead to harsher sentencing and higher bail amounts for demographic groups that are already disproportionately affected by the justice system.</p>
 <p>As we reflect on these findings, it becomes clear that reliance on such algorithmic assessments without ongoing scrutiny and adjustment perpetuates existing societal inequalities under the guise of objectivity. The path forward must involve transparent, inclusive discussions about the role of technology in justice—a dialogue that prioritizes fairness over efficiency.</p>
-</section>
-<section id="rubric-other-components" class="level2">
-<h2 class="anchored" data-anchor-id="rubric-other-components">Rubric: Other components</h2>
-<section id="interactive" class="level3">
-<h3 class="anchored" data-anchor-id="interactive">Interactive</h3>
-<p>You will also be required to make an interactive dashboard like <a href="./flex/flex.html">this one</a>.</p>
-<p>Your Big Data page should include a link to an interactive dashboard. The dashboard should be created either using Shiny or FlexDashboard (or another tool with professor’s approval). This interactive component should in some way support your thesis from your big picture page. Good interactives often provide both high-level understanding of the data while allowing a user to investigate specific scenarios, observations, subgroups, etc.</p>
-<ul>
-<li>Quality and ease of use of the interactive components. Is it clear what can be explored using your interactive components? Does it enhance and reinforce your conclusions from the Big Picture? Plotly with default hover text will get no credit. Be creative!</li>
-</ul>
-</section>
-<section id="video-recording" class="level3">
-<h3 class="anchored" data-anchor-id="video-recording">Video Recording</h3>
-<p>Make a video recording (probably using Zoom) demonstrating your interactive components. You should provide a quick explanation of your data and demonstrate some of the conclusions from your EDA. This video should be no longer than 4 minutes. Include a link to your video (and password if needed) in your README.md file on your Github repository. You are not required to provide a link on the website. This can be presented by any subset of the team members.</p>
-</section>
-<section id="rest-of-the-site" class="level3">
-<h3 class="anchored" data-anchor-id="rest-of-the-site">Rest of the Site</h3>
-<p>Finally, here are important things to keep in mind for the rest of the site.</p>
-<p>The main title of your page is informative. Each post has an author/description/informative title. All lab required posts are present. Each page (including the home page) has a nice featured image associated with it. Your about page is up to date and clean. You have removed the generic posts from the initial site template.</p>
 
 
 </section>
