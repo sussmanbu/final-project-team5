@@ -28,7 +28,12 @@ df <- compas_scores_clean %>%
   mutate(Race = case_when(
       Race %in% c("African-American", "African-Am") ~ "African-American",
       TRUE ~ Race
-    ))
+    )) %>% 
+  mutate(Age_Bin = cut(Age, breaks = seq(10, 100, by = 10), labels = FALSE)) %>%
+  group_by(Age_Bin, Race) %>% 
+  mutate(Avg_Score = ave(DecileScore)) %>% 
+  view()
+
 ggplot(df, aes(x=Race, y=DecileScore)) +
   geom_boxplot() +
   labs(title="Distribution of DecileScores by Race",
@@ -42,14 +47,16 @@ Race, however, tells a more concerning story. The distribution of scores by race
 
 ## Age, Recidivism, and the Algorithm
 ```{r echo = FALSE, warning=FALSE}
-ggplot(df, aes(x = Age)) +
-  geom_histogram(binwidth = 5, fill = "blue", color = "black") +
-  ggtitle("Age Distribution by Race") +
-  xlab("Age") +
-  ylab("Frequency") +
-  facet_wrap(~ Race, scales = "free_y") +  # Faceting by race
-  theme_minimal() +
-  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+df %>% 
+  distinct(Age_Bin, Race, Avg_Score) %>% 
+  ggplot(aes(x = as.factor(Age_Bin), y = Avg_Score)) +
+    geom_col(fill = "blue") +
+    ggtitle("Score Distribution by Age and Race") +
+    xlab("Age") +
+    ylab("Average Score") +
+    facet_wrap(~ Race, scales = "free_y") +  # Faceting by race
+    theme_minimal() +
+    theme(axis.text.x = element_text(angle = 45, hjust = 1))
 ```
 
 Age also plays a significant role in the COMPAS assessments. Younger individuals tend to have higher scores, which gradually decrease with age. This trend is consistent across all racial groups but is more pronounced in some than others, suggesting that age-related biases could intersect with racial biases to compound the effects of an already flawed system.
