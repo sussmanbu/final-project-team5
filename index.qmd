@@ -13,4 +13,4 @@ title-block-banner: true
 
 # ![](images/Pasted Graphic.jpg)
 
-# Team 5 COMPAS Analysis
+# Team 5 - COMPAS Analysis
