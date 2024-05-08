@@ -5,7 +5,9 @@ toc: true
 draft: FALSE
 ---
 
-# ![](images/WechatIMG166.jpg)Unveiling Bias: A Deep Dive into the COMPAS Recidivism Scores
+![](images/clipboard-27189430.png)
+
+# Unveiling Bias: A Deep Dive into the COMPAS Recidivism Scores
 
 The use of algorithmic scoring in criminal justice, specifically the COMPAS (Correctional Offender Management Profiling for Alternative Sanctions) score, has been touted as a way to modernize and streamline sentencing processes. This score is meant to predict the likelihood that an individual will reoffend. However, beneath the digital facade, concerns about bias and fairness persist. Our exploration of the relationship between demographics and COMPAS score provides insights into how these scores correlate with age, sex, and race, highlighting potential biases that could influence judicial decisions and outcomes.
 
